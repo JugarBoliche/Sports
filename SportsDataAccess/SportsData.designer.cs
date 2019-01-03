@@ -42,15 +42,6 @@ namespace SportsDataAccess
     partial void InsertPlayerInfo(PlayerInfo instance);
     partial void UpdatePlayerInfo(PlayerInfo instance);
     partial void DeletePlayerInfo(PlayerInfo instance);
-    partial void InsertNBAWeeklyPlayerStat(NBAWeeklyPlayerStat instance);
-    partial void UpdateNBAWeeklyPlayerStat(NBAWeeklyPlayerStat instance);
-    partial void DeleteNBAWeeklyPlayerStat(NBAWeeklyPlayerStat instance);
-    partial void InsertNBAWeeklyTeamStat(NBAWeeklyTeamStat instance);
-    partial void UpdateNBAWeeklyTeamStat(NBAWeeklyTeamStat instance);
-    partial void DeleteNBAWeeklyTeamStat(NBAWeeklyTeamStat instance);
-    partial void InsertNBAAdvWeeklyPlayerStat(NBAAdvWeeklyPlayerStat instance);
-    partial void UpdateNBAAdvWeeklyPlayerStat(NBAAdvWeeklyPlayerStat instance);
-    partial void DeleteNBAAdvWeeklyPlayerStat(NBAAdvWeeklyPlayerStat instance);
     partial void InsertNBAAdvTotalPlayerStat(NBAAdvTotalPlayerStat instance);
     partial void UpdateNBAAdvTotalPlayerStat(NBAAdvTotalPlayerStat instance);
     partial void DeleteNBAAdvTotalPlayerStat(NBAAdvTotalPlayerStat instance);
@@ -60,6 +51,15 @@ namespace SportsDataAccess
     partial void InsertMatchupInfo(MatchupInfo instance);
     partial void UpdateMatchupInfo(MatchupInfo instance);
     partial void DeleteMatchupInfo(MatchupInfo instance);
+    partial void InsertNBAAdvWeeklyPlayerStat(NBAAdvWeeklyPlayerStat instance);
+    partial void UpdateNBAAdvWeeklyPlayerStat(NBAAdvWeeklyPlayerStat instance);
+    partial void DeleteNBAAdvWeeklyPlayerStat(NBAAdvWeeklyPlayerStat instance);
+    partial void InsertNBAWeeklyPlayerStat(NBAWeeklyPlayerStat instance);
+    partial void UpdateNBAWeeklyPlayerStat(NBAWeeklyPlayerStat instance);
+    partial void DeleteNBAWeeklyPlayerStat(NBAWeeklyPlayerStat instance);
+    partial void InsertNBAWeeklyTeamStat(NBAWeeklyTeamStat instance);
+    partial void UpdateNBAWeeklyTeamStat(NBAWeeklyTeamStat instance);
+    partial void DeleteNBAWeeklyTeamStat(NBAWeeklyTeamStat instance);
     #endregion
 		
 		public SportsDataDataContext() : 
@@ -124,30 +124,6 @@ namespace SportsDataAccess
 			}
 		}
 		
-		public System.Data.Linq.Table<NBAWeeklyPlayerStat> NBAWeeklyPlayerStats
-		{
-			get
-			{
-				return this.GetTable<NBAWeeklyPlayerStat>();
-			}
-		}
-		
-		public System.Data.Linq.Table<NBAWeeklyTeamStat> NBAWeeklyTeamStats
-		{
-			get
-			{
-				return this.GetTable<NBAWeeklyTeamStat>();
-			}
-		}
-		
-		public System.Data.Linq.Table<NBAAdvWeeklyPlayerStat> NBAAdvWeeklyPlayerStats
-		{
-			get
-			{
-				return this.GetTable<NBAAdvWeeklyPlayerStat>();
-			}
-		}
-		
 		public System.Data.Linq.Table<NBAAdvTotalPlayerStat> NBAAdvTotalPlayerStats
 		{
 			get
@@ -169,6 +145,30 @@ namespace SportsDataAccess
 			get
 			{
 				return this.GetTable<MatchupInfo>();
+			}
+		}
+		
+		public System.Data.Linq.Table<NBAAdvWeeklyPlayerStat> NBAAdvWeeklyPlayerStats
+		{
+			get
+			{
+				return this.GetTable<NBAAdvWeeklyPlayerStat>();
+			}
+		}
+		
+		public System.Data.Linq.Table<NBAWeeklyPlayerStat> NBAWeeklyPlayerStats
+		{
+			get
+			{
+				return this.GetTable<NBAWeeklyPlayerStat>();
+			}
+		}
+		
+		public System.Data.Linq.Table<NBAWeeklyTeamStat> NBAWeeklyTeamStats
+		{
+			get
+			{
+				return this.GetTable<NBAWeeklyTeamStat>();
 			}
 		}
 	}
@@ -690,15 +690,15 @@ namespace SportsDataAccess
 		
 		private string _manager;
 		
-		private EntitySet<NBAWeeklyPlayerStat> _NBAWeeklyPlayerStats;
-		
-		private EntitySet<NBAWeeklyTeamStat> _NBAWeeklyTeamStats;
-		
-		private EntitySet<NBAAdvWeeklyPlayerStat> _NBAAdvWeeklyPlayerStats;
-		
 		private EntitySet<MatchupInfo> _MatchupInfos;
 		
 		private EntitySet<MatchupInfo> _MatchupInfos1;
+		
+		private EntitySet<NBAAdvWeeklyPlayerStat> _NBAAdvWeeklyPlayerStats;
+		
+		private EntitySet<NBAWeeklyPlayerStat> _NBAWeeklyPlayerStats;
+		
+		private EntitySet<NBAWeeklyTeamStat> _NBAWeeklyTeamStats;
 		
 		private EntityRef<LeagueInfo> _LeagueInfo;
 		
@@ -720,11 +720,11 @@ namespace SportsDataAccess
 		
 		public TeamInfo()
 		{
-			this._NBAWeeklyPlayerStats = new EntitySet<NBAWeeklyPlayerStat>(new Action<NBAWeeklyPlayerStat>(this.attach_NBAWeeklyPlayerStats), new Action<NBAWeeklyPlayerStat>(this.detach_NBAWeeklyPlayerStats));
-			this._NBAWeeklyTeamStats = new EntitySet<NBAWeeklyTeamStat>(new Action<NBAWeeklyTeamStat>(this.attach_NBAWeeklyTeamStats), new Action<NBAWeeklyTeamStat>(this.detach_NBAWeeklyTeamStats));
-			this._NBAAdvWeeklyPlayerStats = new EntitySet<NBAAdvWeeklyPlayerStat>(new Action<NBAAdvWeeklyPlayerStat>(this.attach_NBAAdvWeeklyPlayerStats), new Action<NBAAdvWeeklyPlayerStat>(this.detach_NBAAdvWeeklyPlayerStats));
 			this._MatchupInfos = new EntitySet<MatchupInfo>(new Action<MatchupInfo>(this.attach_MatchupInfos), new Action<MatchupInfo>(this.detach_MatchupInfos));
 			this._MatchupInfos1 = new EntitySet<MatchupInfo>(new Action<MatchupInfo>(this.attach_MatchupInfos1), new Action<MatchupInfo>(this.detach_MatchupInfos1));
+			this._NBAAdvWeeklyPlayerStats = new EntitySet<NBAAdvWeeklyPlayerStat>(new Action<NBAAdvWeeklyPlayerStat>(this.attach_NBAAdvWeeklyPlayerStats), new Action<NBAAdvWeeklyPlayerStat>(this.detach_NBAAdvWeeklyPlayerStats));
+			this._NBAWeeklyPlayerStats = new EntitySet<NBAWeeklyPlayerStat>(new Action<NBAWeeklyPlayerStat>(this.attach_NBAWeeklyPlayerStats), new Action<NBAWeeklyPlayerStat>(this.detach_NBAWeeklyPlayerStats));
+			this._NBAWeeklyTeamStats = new EntitySet<NBAWeeklyTeamStat>(new Action<NBAWeeklyTeamStat>(this.attach_NBAWeeklyTeamStats), new Action<NBAWeeklyTeamStat>(this.detach_NBAWeeklyTeamStats));
 			this._LeagueInfo = default(EntityRef<LeagueInfo>);
 			OnCreated();
 		}
@@ -833,45 +833,6 @@ namespace SportsDataAccess
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TeamInfo_NBAWeeklyPlayerStat", Storage="_NBAWeeklyPlayerStats", ThisKey="team_key", OtherKey="team_key")]
-		public EntitySet<NBAWeeklyPlayerStat> NBAWeeklyPlayerStats
-		{
-			get
-			{
-				return this._NBAWeeklyPlayerStats;
-			}
-			set
-			{
-				this._NBAWeeklyPlayerStats.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TeamInfo_NBAWeeklyTeamStat", Storage="_NBAWeeklyTeamStats", ThisKey="team_key", OtherKey="team_key")]
-		public EntitySet<NBAWeeklyTeamStat> NBAWeeklyTeamStats
-		{
-			get
-			{
-				return this._NBAWeeklyTeamStats;
-			}
-			set
-			{
-				this._NBAWeeklyTeamStats.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TeamInfo_NBAAdvWeeklyPlayerStat", Storage="_NBAAdvWeeklyPlayerStats", ThisKey="team_key", OtherKey="team_key")]
-		public EntitySet<NBAAdvWeeklyPlayerStat> NBAAdvWeeklyPlayerStats
-		{
-			get
-			{
-				return this._NBAAdvWeeklyPlayerStats;
-			}
-			set
-			{
-				this._NBAAdvWeeklyPlayerStats.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TeamInfo_MatchupInfo", Storage="_MatchupInfos", ThisKey="team_key", OtherKey="team1_key")]
 		public EntitySet<MatchupInfo> MatchupInfos
 		{
@@ -895,6 +856,45 @@ namespace SportsDataAccess
 			set
 			{
 				this._MatchupInfos1.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TeamInfo_NBAAdvWeeklyPlayerStat", Storage="_NBAAdvWeeklyPlayerStats", ThisKey="team_key", OtherKey="team_key")]
+		public EntitySet<NBAAdvWeeklyPlayerStat> NBAAdvWeeklyPlayerStats
+		{
+			get
+			{
+				return this._NBAAdvWeeklyPlayerStats;
+			}
+			set
+			{
+				this._NBAAdvWeeklyPlayerStats.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TeamInfo_NBAWeeklyPlayerStat", Storage="_NBAWeeklyPlayerStats", ThisKey="team_key", OtherKey="team_key")]
+		public EntitySet<NBAWeeklyPlayerStat> NBAWeeklyPlayerStats
+		{
+			get
+			{
+				return this._NBAWeeklyPlayerStats;
+			}
+			set
+			{
+				this._NBAWeeklyPlayerStats.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TeamInfo_NBAWeeklyTeamStat", Storage="_NBAWeeklyTeamStats", ThisKey="team_key", OtherKey="team_key")]
+		public EntitySet<NBAWeeklyTeamStat> NBAWeeklyTeamStats
+		{
+			get
+			{
+				return this._NBAWeeklyTeamStats;
+			}
+			set
+			{
+				this._NBAWeeklyTeamStats.Assign(value);
 			}
 		}
 		
@@ -952,42 +952,6 @@ namespace SportsDataAccess
 			}
 		}
 		
-		private void attach_NBAWeeklyPlayerStats(NBAWeeklyPlayerStat entity)
-		{
-			this.SendPropertyChanging();
-			entity.TeamInfo = this;
-		}
-		
-		private void detach_NBAWeeklyPlayerStats(NBAWeeklyPlayerStat entity)
-		{
-			this.SendPropertyChanging();
-			entity.TeamInfo = null;
-		}
-		
-		private void attach_NBAWeeklyTeamStats(NBAWeeklyTeamStat entity)
-		{
-			this.SendPropertyChanging();
-			entity.TeamInfo = this;
-		}
-		
-		private void detach_NBAWeeklyTeamStats(NBAWeeklyTeamStat entity)
-		{
-			this.SendPropertyChanging();
-			entity.TeamInfo = null;
-		}
-		
-		private void attach_NBAAdvWeeklyPlayerStats(NBAAdvWeeklyPlayerStat entity)
-		{
-			this.SendPropertyChanging();
-			entity.TeamInfo = this;
-		}
-		
-		private void detach_NBAAdvWeeklyPlayerStats(NBAAdvWeeklyPlayerStat entity)
-		{
-			this.SendPropertyChanging();
-			entity.TeamInfo = null;
-		}
-		
 		private void attach_MatchupInfos(MatchupInfo entity)
 		{
 			this.SendPropertyChanging();
@@ -1011,6 +975,42 @@ namespace SportsDataAccess
 			this.SendPropertyChanging();
 			entity.TeamInfo1 = null;
 		}
+		
+		private void attach_NBAAdvWeeklyPlayerStats(NBAAdvWeeklyPlayerStat entity)
+		{
+			this.SendPropertyChanging();
+			entity.TeamInfo = this;
+		}
+		
+		private void detach_NBAAdvWeeklyPlayerStats(NBAAdvWeeklyPlayerStat entity)
+		{
+			this.SendPropertyChanging();
+			entity.TeamInfo = null;
+		}
+		
+		private void attach_NBAWeeklyPlayerStats(NBAWeeklyPlayerStat entity)
+		{
+			this.SendPropertyChanging();
+			entity.TeamInfo = this;
+		}
+		
+		private void detach_NBAWeeklyPlayerStats(NBAWeeklyPlayerStat entity)
+		{
+			this.SendPropertyChanging();
+			entity.TeamInfo = null;
+		}
+		
+		private void attach_NBAWeeklyTeamStats(NBAWeeklyTeamStat entity)
+		{
+			this.SendPropertyChanging();
+			entity.TeamInfo = this;
+		}
+		
+		private void detach_NBAWeeklyTeamStats(NBAWeeklyTeamStat entity)
+		{
+			this.SendPropertyChanging();
+			entity.TeamInfo = null;
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.PlayerInfo")]
@@ -1029,11 +1029,11 @@ namespace SportsDataAccess
 		
 		private string _last_name;
 		
-		private EntitySet<NBAWeeklyPlayerStat> _NBAWeeklyPlayerStats;
+		private EntitySet<NBAAdvTotalPlayerStat> _NBAAdvTotalPlayerStats;
 		
 		private EntitySet<NBAAdvWeeklyPlayerStat> _NBAAdvWeeklyPlayerStats;
 		
-		private EntitySet<NBAAdvTotalPlayerStat> _NBAAdvTotalPlayerStats;
+		private EntitySet<NBAWeeklyPlayerStat> _NBAWeeklyPlayerStats;
 		
 		private EntityRef<GameInfo> _GameInfo;
 		
@@ -1055,9 +1055,9 @@ namespace SportsDataAccess
 		
 		public PlayerInfo()
 		{
-			this._NBAWeeklyPlayerStats = new EntitySet<NBAWeeklyPlayerStat>(new Action<NBAWeeklyPlayerStat>(this.attach_NBAWeeklyPlayerStats), new Action<NBAWeeklyPlayerStat>(this.detach_NBAWeeklyPlayerStats));
-			this._NBAAdvWeeklyPlayerStats = new EntitySet<NBAAdvWeeklyPlayerStat>(new Action<NBAAdvWeeklyPlayerStat>(this.attach_NBAAdvWeeklyPlayerStats), new Action<NBAAdvWeeklyPlayerStat>(this.detach_NBAAdvWeeklyPlayerStats));
 			this._NBAAdvTotalPlayerStats = new EntitySet<NBAAdvTotalPlayerStat>(new Action<NBAAdvTotalPlayerStat>(this.attach_NBAAdvTotalPlayerStats), new Action<NBAAdvTotalPlayerStat>(this.detach_NBAAdvTotalPlayerStats));
+			this._NBAAdvWeeklyPlayerStats = new EntitySet<NBAAdvWeeklyPlayerStat>(new Action<NBAAdvWeeklyPlayerStat>(this.attach_NBAAdvWeeklyPlayerStats), new Action<NBAAdvWeeklyPlayerStat>(this.detach_NBAAdvWeeklyPlayerStats));
+			this._NBAWeeklyPlayerStats = new EntitySet<NBAWeeklyPlayerStat>(new Action<NBAWeeklyPlayerStat>(this.attach_NBAWeeklyPlayerStats), new Action<NBAWeeklyPlayerStat>(this.detach_NBAWeeklyPlayerStats));
 			this._GameInfo = default(EntityRef<GameInfo>);
 			OnCreated();
 		}
@@ -1166,16 +1166,16 @@ namespace SportsDataAccess
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PlayerInfo_NBAWeeklyPlayerStat", Storage="_NBAWeeklyPlayerStats", ThisKey="player_key", OtherKey="player_key")]
-		public EntitySet<NBAWeeklyPlayerStat> NBAWeeklyPlayerStats
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PlayerInfo_NBAAdvTotalPlayerStat", Storage="_NBAAdvTotalPlayerStats", ThisKey="player_key", OtherKey="player_key")]
+		public EntitySet<NBAAdvTotalPlayerStat> NBAAdvTotalPlayerStats
 		{
 			get
 			{
-				return this._NBAWeeklyPlayerStats;
+				return this._NBAAdvTotalPlayerStats;
 			}
 			set
 			{
-				this._NBAWeeklyPlayerStats.Assign(value);
+				this._NBAAdvTotalPlayerStats.Assign(value);
 			}
 		}
 		
@@ -1192,16 +1192,16 @@ namespace SportsDataAccess
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PlayerInfo_NBAAdvTotalPlayerStat", Storage="_NBAAdvTotalPlayerStats", ThisKey="player_key", OtherKey="player_key")]
-		public EntitySet<NBAAdvTotalPlayerStat> NBAAdvTotalPlayerStats
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PlayerInfo_NBAWeeklyPlayerStat", Storage="_NBAWeeklyPlayerStats", ThisKey="player_key", OtherKey="player_key")]
+		public EntitySet<NBAWeeklyPlayerStat> NBAWeeklyPlayerStats
 		{
 			get
 			{
-				return this._NBAAdvTotalPlayerStats;
+				return this._NBAWeeklyPlayerStats;
 			}
 			set
 			{
-				this._NBAAdvTotalPlayerStats.Assign(value);
+				this._NBAWeeklyPlayerStats.Assign(value);
 			}
 		}
 		
@@ -1259,13 +1259,13 @@ namespace SportsDataAccess
 			}
 		}
 		
-		private void attach_NBAWeeklyPlayerStats(NBAWeeklyPlayerStat entity)
+		private void attach_NBAAdvTotalPlayerStats(NBAAdvTotalPlayerStat entity)
 		{
 			this.SendPropertyChanging();
 			entity.PlayerInfo = this;
 		}
 		
-		private void detach_NBAWeeklyPlayerStats(NBAWeeklyPlayerStat entity)
+		private void detach_NBAAdvTotalPlayerStats(NBAAdvTotalPlayerStat entity)
 		{
 			this.SendPropertyChanging();
 			entity.PlayerInfo = null;
@@ -1283,1271 +1283,16 @@ namespace SportsDataAccess
 			entity.PlayerInfo = null;
 		}
 		
-		private void attach_NBAAdvTotalPlayerStats(NBAAdvTotalPlayerStat entity)
+		private void attach_NBAWeeklyPlayerStats(NBAWeeklyPlayerStat entity)
 		{
 			this.SendPropertyChanging();
 			entity.PlayerInfo = this;
 		}
 		
-		private void detach_NBAAdvTotalPlayerStats(NBAAdvTotalPlayerStat entity)
+		private void detach_NBAWeeklyPlayerStats(NBAWeeklyPlayerStat entity)
 		{
 			this.SendPropertyChanging();
 			entity.PlayerInfo = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.NBAWeeklyPlayerStats")]
-	public partial class NBAWeeklyPlayerStat : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private string _player_key;
-		
-		private string _team_key;
-		
-		private System.Nullable<int> _week;
-		
-		private System.Nullable<int> _games_played;
-		
-		private System.Nullable<int> _games_missed;
-		
-		private System.Nullable<int> _points;
-		
-		private System.Nullable<int> _rebounds;
-		
-		private System.Nullable<int> _assists;
-		
-		private System.Nullable<int> _steals;
-		
-		private System.Nullable<int> _blocks;
-		
-		private string _position;
-		
-		private EntityRef<PlayerInfo> _PlayerInfo;
-		
-		private EntityRef<TeamInfo> _TeamInfo;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void Onplayer_keyChanging(string value);
-    partial void Onplayer_keyChanged();
-    partial void Onteam_keyChanging(string value);
-    partial void Onteam_keyChanged();
-    partial void OnweekChanging(System.Nullable<int> value);
-    partial void OnweekChanged();
-    partial void Ongames_playedChanging(System.Nullable<int> value);
-    partial void Ongames_playedChanged();
-    partial void Ongames_missedChanging(System.Nullable<int> value);
-    partial void Ongames_missedChanged();
-    partial void OnpointsChanging(System.Nullable<int> value);
-    partial void OnpointsChanged();
-    partial void OnreboundsChanging(System.Nullable<int> value);
-    partial void OnreboundsChanged();
-    partial void OnassistsChanging(System.Nullable<int> value);
-    partial void OnassistsChanged();
-    partial void OnstealsChanging(System.Nullable<int> value);
-    partial void OnstealsChanged();
-    partial void OnblocksChanging(System.Nullable<int> value);
-    partial void OnblocksChanged();
-    partial void OnpositionChanging(string value);
-    partial void OnpositionChanged();
-    #endregion
-		
-		public NBAWeeklyPlayerStat()
-		{
-			this._PlayerInfo = default(EntityRef<PlayerInfo>);
-			this._TeamInfo = default(EntityRef<TeamInfo>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this.OnidChanging(value);
-					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_player_key", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string player_key
-		{
-			get
-			{
-				return this._player_key;
-			}
-			set
-			{
-				if ((this._player_key != value))
-				{
-					if (this._PlayerInfo.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onplayer_keyChanging(value);
-					this.SendPropertyChanging();
-					this._player_key = value;
-					this.SendPropertyChanged("player_key");
-					this.Onplayer_keyChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_team_key", DbType="NVarChar(50)")]
-		public string team_key
-		{
-			get
-			{
-				return this._team_key;
-			}
-			set
-			{
-				if ((this._team_key != value))
-				{
-					if (this._TeamInfo.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onteam_keyChanging(value);
-					this.SendPropertyChanging();
-					this._team_key = value;
-					this.SendPropertyChanged("team_key");
-					this.Onteam_keyChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_week", DbType="Int")]
-		public System.Nullable<int> week
-		{
-			get
-			{
-				return this._week;
-			}
-			set
-			{
-				if ((this._week != value))
-				{
-					this.OnweekChanging(value);
-					this.SendPropertyChanging();
-					this._week = value;
-					this.SendPropertyChanged("week");
-					this.OnweekChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_games_played", DbType="Int")]
-		public System.Nullable<int> games_played
-		{
-			get
-			{
-				return this._games_played;
-			}
-			set
-			{
-				if ((this._games_played != value))
-				{
-					this.Ongames_playedChanging(value);
-					this.SendPropertyChanging();
-					this._games_played = value;
-					this.SendPropertyChanged("games_played");
-					this.Ongames_playedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_games_missed", DbType="Int")]
-		public System.Nullable<int> games_missed
-		{
-			get
-			{
-				return this._games_missed;
-			}
-			set
-			{
-				if ((this._games_missed != value))
-				{
-					this.Ongames_missedChanging(value);
-					this.SendPropertyChanging();
-					this._games_missed = value;
-					this.SendPropertyChanged("games_missed");
-					this.Ongames_missedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_points", DbType="Int")]
-		public System.Nullable<int> points
-		{
-			get
-			{
-				return this._points;
-			}
-			set
-			{
-				if ((this._points != value))
-				{
-					this.OnpointsChanging(value);
-					this.SendPropertyChanging();
-					this._points = value;
-					this.SendPropertyChanged("points");
-					this.OnpointsChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_rebounds", DbType="Int")]
-		public System.Nullable<int> rebounds
-		{
-			get
-			{
-				return this._rebounds;
-			}
-			set
-			{
-				if ((this._rebounds != value))
-				{
-					this.OnreboundsChanging(value);
-					this.SendPropertyChanging();
-					this._rebounds = value;
-					this.SendPropertyChanged("rebounds");
-					this.OnreboundsChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_assists", DbType="Int")]
-		public System.Nullable<int> assists
-		{
-			get
-			{
-				return this._assists;
-			}
-			set
-			{
-				if ((this._assists != value))
-				{
-					this.OnassistsChanging(value);
-					this.SendPropertyChanging();
-					this._assists = value;
-					this.SendPropertyChanged("assists");
-					this.OnassistsChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_steals", DbType="Int")]
-		public System.Nullable<int> steals
-		{
-			get
-			{
-				return this._steals;
-			}
-			set
-			{
-				if ((this._steals != value))
-				{
-					this.OnstealsChanging(value);
-					this.SendPropertyChanging();
-					this._steals = value;
-					this.SendPropertyChanged("steals");
-					this.OnstealsChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_blocks", DbType="Int")]
-		public System.Nullable<int> blocks
-		{
-			get
-			{
-				return this._blocks;
-			}
-			set
-			{
-				if ((this._blocks != value))
-				{
-					this.OnblocksChanging(value);
-					this.SendPropertyChanging();
-					this._blocks = value;
-					this.SendPropertyChanged("blocks");
-					this.OnblocksChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_position", DbType="NVarChar(10)")]
-		public string position
-		{
-			get
-			{
-				return this._position;
-			}
-			set
-			{
-				if ((this._position != value))
-				{
-					this.OnpositionChanging(value);
-					this.SendPropertyChanging();
-					this._position = value;
-					this.SendPropertyChanged("position");
-					this.OnpositionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PlayerInfo_NBAWeeklyPlayerStat", Storage="_PlayerInfo", ThisKey="player_key", OtherKey="player_key", IsForeignKey=true)]
-		public PlayerInfo PlayerInfo
-		{
-			get
-			{
-				return this._PlayerInfo.Entity;
-			}
-			set
-			{
-				PlayerInfo previousValue = this._PlayerInfo.Entity;
-				if (((previousValue != value) 
-							|| (this._PlayerInfo.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._PlayerInfo.Entity = null;
-						previousValue.NBAWeeklyPlayerStats.Remove(this);
-					}
-					this._PlayerInfo.Entity = value;
-					if ((value != null))
-					{
-						value.NBAWeeklyPlayerStats.Add(this);
-						this._player_key = value.player_key;
-					}
-					else
-					{
-						this._player_key = default(string);
-					}
-					this.SendPropertyChanged("PlayerInfo");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TeamInfo_NBAWeeklyPlayerStat", Storage="_TeamInfo", ThisKey="team_key", OtherKey="team_key", IsForeignKey=true)]
-		public TeamInfo TeamInfo
-		{
-			get
-			{
-				return this._TeamInfo.Entity;
-			}
-			set
-			{
-				TeamInfo previousValue = this._TeamInfo.Entity;
-				if (((previousValue != value) 
-							|| (this._TeamInfo.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._TeamInfo.Entity = null;
-						previousValue.NBAWeeklyPlayerStats.Remove(this);
-					}
-					this._TeamInfo.Entity = value;
-					if ((value != null))
-					{
-						value.NBAWeeklyPlayerStats.Add(this);
-						this._team_key = value.team_key;
-					}
-					else
-					{
-						this._team_key = default(string);
-					}
-					this.SendPropertyChanged("TeamInfo");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.NBAWeeklyTeamStats")]
-	public partial class NBAWeeklyTeamStat : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private string _team_key;
-		
-		private System.Nullable<int> _week;
-		
-		private System.Nullable<int> _games_played;
-		
-		private System.Nullable<int> _games_missed;
-		
-		private System.Nullable<int> _points;
-		
-		private System.Nullable<int> _assists;
-		
-		private System.Nullable<int> _rebounds;
-		
-		private System.Nullable<int> _steals;
-		
-		private System.Nullable<int> _blocks;
-		
-		private System.Nullable<decimal> _points_win;
-		
-		private System.Nullable<decimal> _rebounds_win;
-		
-		private System.Nullable<decimal> _assists_win;
-		
-		private System.Nullable<decimal> _steals_win;
-		
-		private System.Nullable<decimal> _blocks_win;
-		
-		private EntityRef<TeamInfo> _TeamInfo;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void Onteam_keyChanging(string value);
-    partial void Onteam_keyChanged();
-    partial void OnweekChanging(System.Nullable<int> value);
-    partial void OnweekChanged();
-    partial void Ongames_playedChanging(System.Nullable<int> value);
-    partial void Ongames_playedChanged();
-    partial void Ongames_missedChanging(System.Nullable<int> value);
-    partial void Ongames_missedChanged();
-    partial void OnpointsChanging(System.Nullable<int> value);
-    partial void OnpointsChanged();
-    partial void OnassistsChanging(System.Nullable<int> value);
-    partial void OnassistsChanged();
-    partial void OnreboundsChanging(System.Nullable<int> value);
-    partial void OnreboundsChanged();
-    partial void OnstealsChanging(System.Nullable<int> value);
-    partial void OnstealsChanged();
-    partial void OnblocksChanging(System.Nullable<int> value);
-    partial void OnblocksChanged();
-    partial void Onpoints_winChanging(System.Nullable<decimal> value);
-    partial void Onpoints_winChanged();
-    partial void Onrebounds_winChanging(System.Nullable<decimal> value);
-    partial void Onrebounds_winChanged();
-    partial void Onassists_winChanging(System.Nullable<decimal> value);
-    partial void Onassists_winChanged();
-    partial void Onsteals_winChanging(System.Nullable<decimal> value);
-    partial void Onsteals_winChanged();
-    partial void Onblocks_winChanging(System.Nullable<decimal> value);
-    partial void Onblocks_winChanged();
-    #endregion
-		
-		public NBAWeeklyTeamStat()
-		{
-			this._TeamInfo = default(EntityRef<TeamInfo>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this.OnidChanging(value);
-					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_team_key", DbType="NVarChar(50)")]
-		public string team_key
-		{
-			get
-			{
-				return this._team_key;
-			}
-			set
-			{
-				if ((this._team_key != value))
-				{
-					if (this._TeamInfo.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onteam_keyChanging(value);
-					this.SendPropertyChanging();
-					this._team_key = value;
-					this.SendPropertyChanged("team_key");
-					this.Onteam_keyChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_week", DbType="Int")]
-		public System.Nullable<int> week
-		{
-			get
-			{
-				return this._week;
-			}
-			set
-			{
-				if ((this._week != value))
-				{
-					this.OnweekChanging(value);
-					this.SendPropertyChanging();
-					this._week = value;
-					this.SendPropertyChanged("week");
-					this.OnweekChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_games_played", DbType="Int")]
-		public System.Nullable<int> games_played
-		{
-			get
-			{
-				return this._games_played;
-			}
-			set
-			{
-				if ((this._games_played != value))
-				{
-					this.Ongames_playedChanging(value);
-					this.SendPropertyChanging();
-					this._games_played = value;
-					this.SendPropertyChanged("games_played");
-					this.Ongames_playedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_games_missed", DbType="Int")]
-		public System.Nullable<int> games_missed
-		{
-			get
-			{
-				return this._games_missed;
-			}
-			set
-			{
-				if ((this._games_missed != value))
-				{
-					this.Ongames_missedChanging(value);
-					this.SendPropertyChanging();
-					this._games_missed = value;
-					this.SendPropertyChanged("games_missed");
-					this.Ongames_missedChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_points", DbType="Int")]
-		public System.Nullable<int> points
-		{
-			get
-			{
-				return this._points;
-			}
-			set
-			{
-				if ((this._points != value))
-				{
-					this.OnpointsChanging(value);
-					this.SendPropertyChanging();
-					this._points = value;
-					this.SendPropertyChanged("points");
-					this.OnpointsChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_assists", DbType="Int")]
-		public System.Nullable<int> assists
-		{
-			get
-			{
-				return this._assists;
-			}
-			set
-			{
-				if ((this._assists != value))
-				{
-					this.OnassistsChanging(value);
-					this.SendPropertyChanging();
-					this._assists = value;
-					this.SendPropertyChanged("assists");
-					this.OnassistsChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_rebounds", DbType="Int")]
-		public System.Nullable<int> rebounds
-		{
-			get
-			{
-				return this._rebounds;
-			}
-			set
-			{
-				if ((this._rebounds != value))
-				{
-					this.OnreboundsChanging(value);
-					this.SendPropertyChanging();
-					this._rebounds = value;
-					this.SendPropertyChanged("rebounds");
-					this.OnreboundsChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_steals", DbType="Int")]
-		public System.Nullable<int> steals
-		{
-			get
-			{
-				return this._steals;
-			}
-			set
-			{
-				if ((this._steals != value))
-				{
-					this.OnstealsChanging(value);
-					this.SendPropertyChanging();
-					this._steals = value;
-					this.SendPropertyChanged("steals");
-					this.OnstealsChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_blocks", DbType="Int")]
-		public System.Nullable<int> blocks
-		{
-			get
-			{
-				return this._blocks;
-			}
-			set
-			{
-				if ((this._blocks != value))
-				{
-					this.OnblocksChanging(value);
-					this.SendPropertyChanging();
-					this._blocks = value;
-					this.SendPropertyChanged("blocks");
-					this.OnblocksChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_points_win", DbType="Decimal(2,0)")]
-		public System.Nullable<decimal> points_win
-		{
-			get
-			{
-				return this._points_win;
-			}
-			set
-			{
-				if ((this._points_win != value))
-				{
-					this.Onpoints_winChanging(value);
-					this.SendPropertyChanging();
-					this._points_win = value;
-					this.SendPropertyChanged("points_win");
-					this.Onpoints_winChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_rebounds_win", DbType="Decimal(2,0)")]
-		public System.Nullable<decimal> rebounds_win
-		{
-			get
-			{
-				return this._rebounds_win;
-			}
-			set
-			{
-				if ((this._rebounds_win != value))
-				{
-					this.Onrebounds_winChanging(value);
-					this.SendPropertyChanging();
-					this._rebounds_win = value;
-					this.SendPropertyChanged("rebounds_win");
-					this.Onrebounds_winChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_assists_win", DbType="Decimal(2,0)")]
-		public System.Nullable<decimal> assists_win
-		{
-			get
-			{
-				return this._assists_win;
-			}
-			set
-			{
-				if ((this._assists_win != value))
-				{
-					this.Onassists_winChanging(value);
-					this.SendPropertyChanging();
-					this._assists_win = value;
-					this.SendPropertyChanged("assists_win");
-					this.Onassists_winChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_steals_win", DbType="Decimal(2,0)")]
-		public System.Nullable<decimal> steals_win
-		{
-			get
-			{
-				return this._steals_win;
-			}
-			set
-			{
-				if ((this._steals_win != value))
-				{
-					this.Onsteals_winChanging(value);
-					this.SendPropertyChanging();
-					this._steals_win = value;
-					this.SendPropertyChanged("steals_win");
-					this.Onsteals_winChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_blocks_win", DbType="Decimal(2,0)")]
-		public System.Nullable<decimal> blocks_win
-		{
-			get
-			{
-				return this._blocks_win;
-			}
-			set
-			{
-				if ((this._blocks_win != value))
-				{
-					this.Onblocks_winChanging(value);
-					this.SendPropertyChanging();
-					this._blocks_win = value;
-					this.SendPropertyChanged("blocks_win");
-					this.Onblocks_winChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TeamInfo_NBAWeeklyTeamStat", Storage="_TeamInfo", ThisKey="team_key", OtherKey="team_key", IsForeignKey=true)]
-		public TeamInfo TeamInfo
-		{
-			get
-			{
-				return this._TeamInfo.Entity;
-			}
-			set
-			{
-				TeamInfo previousValue = this._TeamInfo.Entity;
-				if (((previousValue != value) 
-							|| (this._TeamInfo.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._TeamInfo.Entity = null;
-						previousValue.NBAWeeklyTeamStats.Remove(this);
-					}
-					this._TeamInfo.Entity = value;
-					if ((value != null))
-					{
-						value.NBAWeeklyTeamStats.Add(this);
-						this._team_key = value.team_key;
-					}
-					else
-					{
-						this._team_key = default(string);
-					}
-					this.SendPropertyChanged("TeamInfo");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.NBAAdvWeeklyPlayerStats")]
-	public partial class NBAAdvWeeklyPlayerStat : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private string _player_key;
-		
-		private string _team_key;
-		
-		private System.Nullable<int> _week;
-		
-		private System.Nullable<decimal> _ppg_pct;
-		
-		private System.Nullable<decimal> _rpg_pct;
-		
-		private System.Nullable<decimal> _apg_pct;
-		
-		private System.Nullable<decimal> _spg_pct;
-		
-		private System.Nullable<decimal> _bpg_pct;
-		
-		private System.Nullable<decimal> _pct_contribution;
-		
-		private System.Nullable<decimal> _win_pct_contribution;
-		
-		private System.Nullable<decimal> _pct_contribution_of_wins;
-		
-		private EntityRef<PlayerInfo> _PlayerInfo;
-		
-		private EntityRef<TeamInfo> _TeamInfo;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void Onplayer_keyChanging(string value);
-    partial void Onplayer_keyChanged();
-    partial void Onteam_keyChanging(string value);
-    partial void Onteam_keyChanged();
-    partial void OnweekChanging(System.Nullable<int> value);
-    partial void OnweekChanged();
-    partial void Onppg_pctChanging(System.Nullable<decimal> value);
-    partial void Onppg_pctChanged();
-    partial void Onrpg_pctChanging(System.Nullable<decimal> value);
-    partial void Onrpg_pctChanged();
-    partial void Onapg_pctChanging(System.Nullable<decimal> value);
-    partial void Onapg_pctChanged();
-    partial void Onspg_pctChanging(System.Nullable<decimal> value);
-    partial void Onspg_pctChanged();
-    partial void Onbpg_pctChanging(System.Nullable<decimal> value);
-    partial void Onbpg_pctChanged();
-    partial void Onpct_contributionChanging(System.Nullable<decimal> value);
-    partial void Onpct_contributionChanged();
-    partial void Onwin_pct_contributionChanging(System.Nullable<decimal> value);
-    partial void Onwin_pct_contributionChanged();
-    partial void Onpct_contribution_of_winsChanging(System.Nullable<decimal> value);
-    partial void Onpct_contribution_of_winsChanged();
-    #endregion
-		
-		public NBAAdvWeeklyPlayerStat()
-		{
-			this._PlayerInfo = default(EntityRef<PlayerInfo>);
-			this._TeamInfo = default(EntityRef<TeamInfo>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this.OnidChanging(value);
-					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_player_key", DbType="NVarChar(50)")]
-		public string player_key
-		{
-			get
-			{
-				return this._player_key;
-			}
-			set
-			{
-				if ((this._player_key != value))
-				{
-					if (this._PlayerInfo.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onplayer_keyChanging(value);
-					this.SendPropertyChanging();
-					this._player_key = value;
-					this.SendPropertyChanged("player_key");
-					this.Onplayer_keyChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_team_key", DbType="NVarChar(50)")]
-		public string team_key
-		{
-			get
-			{
-				return this._team_key;
-			}
-			set
-			{
-				if ((this._team_key != value))
-				{
-					if (this._TeamInfo.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.Onteam_keyChanging(value);
-					this.SendPropertyChanging();
-					this._team_key = value;
-					this.SendPropertyChanged("team_key");
-					this.Onteam_keyChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_week", DbType="Int")]
-		public System.Nullable<int> week
-		{
-			get
-			{
-				return this._week;
-			}
-			set
-			{
-				if ((this._week != value))
-				{
-					this.OnweekChanging(value);
-					this.SendPropertyChanging();
-					this._week = value;
-					this.SendPropertyChanged("week");
-					this.OnweekChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ppg_pct", DbType="Decimal(18,0)")]
-		public System.Nullable<decimal> ppg_pct
-		{
-			get
-			{
-				return this._ppg_pct;
-			}
-			set
-			{
-				if ((this._ppg_pct != value))
-				{
-					this.Onppg_pctChanging(value);
-					this.SendPropertyChanging();
-					this._ppg_pct = value;
-					this.SendPropertyChanged("ppg_pct");
-					this.Onppg_pctChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_rpg_pct", DbType="Decimal(18,0)")]
-		public System.Nullable<decimal> rpg_pct
-		{
-			get
-			{
-				return this._rpg_pct;
-			}
-			set
-			{
-				if ((this._rpg_pct != value))
-				{
-					this.Onrpg_pctChanging(value);
-					this.SendPropertyChanging();
-					this._rpg_pct = value;
-					this.SendPropertyChanged("rpg_pct");
-					this.Onrpg_pctChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_apg_pct", DbType="Decimal(18,0)")]
-		public System.Nullable<decimal> apg_pct
-		{
-			get
-			{
-				return this._apg_pct;
-			}
-			set
-			{
-				if ((this._apg_pct != value))
-				{
-					this.Onapg_pctChanging(value);
-					this.SendPropertyChanging();
-					this._apg_pct = value;
-					this.SendPropertyChanged("apg_pct");
-					this.Onapg_pctChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_spg_pct", DbType="Decimal(18,0)")]
-		public System.Nullable<decimal> spg_pct
-		{
-			get
-			{
-				return this._spg_pct;
-			}
-			set
-			{
-				if ((this._spg_pct != value))
-				{
-					this.Onspg_pctChanging(value);
-					this.SendPropertyChanging();
-					this._spg_pct = value;
-					this.SendPropertyChanged("spg_pct");
-					this.Onspg_pctChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_bpg_pct", DbType="Decimal(18,0)")]
-		public System.Nullable<decimal> bpg_pct
-		{
-			get
-			{
-				return this._bpg_pct;
-			}
-			set
-			{
-				if ((this._bpg_pct != value))
-				{
-					this.Onbpg_pctChanging(value);
-					this.SendPropertyChanging();
-					this._bpg_pct = value;
-					this.SendPropertyChanged("bpg_pct");
-					this.Onbpg_pctChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pct_contribution", DbType="Decimal(18,0)")]
-		public System.Nullable<decimal> pct_contribution
-		{
-			get
-			{
-				return this._pct_contribution;
-			}
-			set
-			{
-				if ((this._pct_contribution != value))
-				{
-					this.Onpct_contributionChanging(value);
-					this.SendPropertyChanging();
-					this._pct_contribution = value;
-					this.SendPropertyChanged("pct_contribution");
-					this.Onpct_contributionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_win_pct_contribution", DbType="Decimal(18,0)")]
-		public System.Nullable<decimal> win_pct_contribution
-		{
-			get
-			{
-				return this._win_pct_contribution;
-			}
-			set
-			{
-				if ((this._win_pct_contribution != value))
-				{
-					this.Onwin_pct_contributionChanging(value);
-					this.SendPropertyChanging();
-					this._win_pct_contribution = value;
-					this.SendPropertyChanged("win_pct_contribution");
-					this.Onwin_pct_contributionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pct_contribution_of_wins", DbType="Decimal(18,0)")]
-		public System.Nullable<decimal> pct_contribution_of_wins
-		{
-			get
-			{
-				return this._pct_contribution_of_wins;
-			}
-			set
-			{
-				if ((this._pct_contribution_of_wins != value))
-				{
-					this.Onpct_contribution_of_winsChanging(value);
-					this.SendPropertyChanging();
-					this._pct_contribution_of_wins = value;
-					this.SendPropertyChanged("pct_contribution_of_wins");
-					this.Onpct_contribution_of_winsChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PlayerInfo_NBAAdvWeeklyPlayerStat", Storage="_PlayerInfo", ThisKey="player_key", OtherKey="player_key", IsForeignKey=true)]
-		public PlayerInfo PlayerInfo
-		{
-			get
-			{
-				return this._PlayerInfo.Entity;
-			}
-			set
-			{
-				PlayerInfo previousValue = this._PlayerInfo.Entity;
-				if (((previousValue != value) 
-							|| (this._PlayerInfo.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._PlayerInfo.Entity = null;
-						previousValue.NBAAdvWeeklyPlayerStats.Remove(this);
-					}
-					this._PlayerInfo.Entity = value;
-					if ((value != null))
-					{
-						value.NBAAdvWeeklyPlayerStats.Add(this);
-						this._player_key = value.player_key;
-					}
-					else
-					{
-						this._player_key = default(string);
-					}
-					this.SendPropertyChanged("PlayerInfo");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TeamInfo_NBAAdvWeeklyPlayerStat", Storage="_TeamInfo", ThisKey="team_key", OtherKey="team_key", IsForeignKey=true)]
-		public TeamInfo TeamInfo
-		{
-			get
-			{
-				return this._TeamInfo.Entity;
-			}
-			set
-			{
-				TeamInfo previousValue = this._TeamInfo.Entity;
-				if (((previousValue != value) 
-							|| (this._TeamInfo.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._TeamInfo.Entity = null;
-						previousValue.NBAAdvWeeklyPlayerStats.Remove(this);
-					}
-					this._TeamInfo.Entity = value;
-					if ((value != null))
-					{
-						value.NBAAdvWeeklyPlayerStats.Add(this);
-						this._team_key = value.team_key;
-					}
-					else
-					{
-						this._team_key = default(string);
-					}
-					this.SendPropertyChanged("TeamInfo");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
 		}
 	}
 	
@@ -3299,6 +2044,12 @@ namespace SportsDataAccess
 		
 		private EntitySet<MatchupInfo> _MatchupInfos;
 		
+		private EntitySet<NBAAdvWeeklyPlayerStat> _NBAAdvWeeklyPlayerStats;
+		
+		private EntitySet<NBAWeeklyPlayerStat> _NBAWeeklyPlayerStats;
+		
+		private EntitySet<NBAWeeklyTeamStat> _NBAWeeklyTeamStats;
+		
 		private EntityRef<LeagueInfo> _LeagueInfo;
 		
     #region Extensibility Method Definitions
@@ -3330,6 +2081,9 @@ namespace SportsDataAccess
 		public WeekInfo()
 		{
 			this._MatchupInfos = new EntitySet<MatchupInfo>(new Action<MatchupInfo>(this.attach_MatchupInfos), new Action<MatchupInfo>(this.detach_MatchupInfos));
+			this._NBAAdvWeeklyPlayerStats = new EntitySet<NBAAdvWeeklyPlayerStat>(new Action<NBAAdvWeeklyPlayerStat>(this.attach_NBAAdvWeeklyPlayerStats), new Action<NBAAdvWeeklyPlayerStat>(this.detach_NBAAdvWeeklyPlayerStats));
+			this._NBAWeeklyPlayerStats = new EntitySet<NBAWeeklyPlayerStat>(new Action<NBAWeeklyPlayerStat>(this.attach_NBAWeeklyPlayerStats), new Action<NBAWeeklyPlayerStat>(this.detach_NBAWeeklyPlayerStats));
+			this._NBAWeeklyTeamStats = new EntitySet<NBAWeeklyTeamStat>(new Action<NBAWeeklyTeamStat>(this.attach_NBAWeeklyTeamStats), new Action<NBAWeeklyTeamStat>(this.detach_NBAWeeklyTeamStats));
 			this._LeagueInfo = default(EntityRef<LeagueInfo>);
 			OnCreated();
 		}
@@ -3551,6 +2305,45 @@ namespace SportsDataAccess
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WeekInfo_NBAAdvWeeklyPlayerStat", Storage="_NBAAdvWeeklyPlayerStats", ThisKey="id", OtherKey="week_id")]
+		public EntitySet<NBAAdvWeeklyPlayerStat> NBAAdvWeeklyPlayerStats
+		{
+			get
+			{
+				return this._NBAAdvWeeklyPlayerStats;
+			}
+			set
+			{
+				this._NBAAdvWeeklyPlayerStats.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WeekInfo_NBAWeeklyPlayerStat", Storage="_NBAWeeklyPlayerStats", ThisKey="id", OtherKey="week_id")]
+		public EntitySet<NBAWeeklyPlayerStat> NBAWeeklyPlayerStats
+		{
+			get
+			{
+				return this._NBAWeeklyPlayerStats;
+			}
+			set
+			{
+				this._NBAWeeklyPlayerStats.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WeekInfo_NBAWeeklyTeamStat", Storage="_NBAWeeklyTeamStats", ThisKey="id", OtherKey="week_id")]
+		public EntitySet<NBAWeeklyTeamStat> NBAWeeklyTeamStats
+		{
+			get
+			{
+				return this._NBAWeeklyTeamStats;
+			}
+			set
+			{
+				this._NBAWeeklyTeamStats.Assign(value);
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="LeagueInfo_WeekInfo", Storage="_LeagueInfo", ThisKey="league_key", OtherKey="league_key", IsForeignKey=true)]
 		public LeagueInfo LeagueInfo
 		{
@@ -3612,6 +2405,42 @@ namespace SportsDataAccess
 		}
 		
 		private void detach_MatchupInfos(MatchupInfo entity)
+		{
+			this.SendPropertyChanging();
+			entity.WeekInfo = null;
+		}
+		
+		private void attach_NBAAdvWeeklyPlayerStats(NBAAdvWeeklyPlayerStat entity)
+		{
+			this.SendPropertyChanging();
+			entity.WeekInfo = this;
+		}
+		
+		private void detach_NBAAdvWeeklyPlayerStats(NBAAdvWeeklyPlayerStat entity)
+		{
+			this.SendPropertyChanging();
+			entity.WeekInfo = null;
+		}
+		
+		private void attach_NBAWeeklyPlayerStats(NBAWeeklyPlayerStat entity)
+		{
+			this.SendPropertyChanging();
+			entity.WeekInfo = this;
+		}
+		
+		private void detach_NBAWeeklyPlayerStats(NBAWeeklyPlayerStat entity)
+		{
+			this.SendPropertyChanging();
+			entity.WeekInfo = null;
+		}
+		
+		private void attach_NBAWeeklyTeamStats(NBAWeeklyTeamStat entity)
+		{
+			this.SendPropertyChanging();
+			entity.WeekInfo = this;
+		}
+		
+		private void detach_NBAWeeklyTeamStats(NBAWeeklyTeamStat entity)
 		{
 			this.SendPropertyChanging();
 			entity.WeekInfo = null;
@@ -3913,6 +2742,1504 @@ namespace SportsDataAccess
 					else
 					{
 						this._week_id = default(int);
+					}
+					this.SendPropertyChanged("WeekInfo");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.NBAAdvWeeklyPlayerStats")]
+	public partial class NBAAdvWeeklyPlayerStat : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _player_key;
+		
+		private string _team_key;
+		
+		private System.Nullable<int> _week_id;
+		
+		private System.Nullable<decimal> _ppg_pct;
+		
+		private System.Nullable<decimal> _rpg_pct;
+		
+		private System.Nullable<decimal> _apg_pct;
+		
+		private System.Nullable<decimal> _spg_pct;
+		
+		private System.Nullable<decimal> _bpg_pct;
+		
+		private System.Nullable<decimal> _pct_contribution;
+		
+		private System.Nullable<decimal> _win_pct_contribution;
+		
+		private System.Nullable<decimal> _pct_contribution_of_wins;
+		
+		private EntityRef<PlayerInfo> _PlayerInfo;
+		
+		private EntityRef<TeamInfo> _TeamInfo;
+		
+		private EntityRef<WeekInfo> _WeekInfo;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void Onplayer_keyChanging(string value);
+    partial void Onplayer_keyChanged();
+    partial void Onteam_keyChanging(string value);
+    partial void Onteam_keyChanged();
+    partial void Onweek_idChanging(System.Nullable<int> value);
+    partial void Onweek_idChanged();
+    partial void Onppg_pctChanging(System.Nullable<decimal> value);
+    partial void Onppg_pctChanged();
+    partial void Onrpg_pctChanging(System.Nullable<decimal> value);
+    partial void Onrpg_pctChanged();
+    partial void Onapg_pctChanging(System.Nullable<decimal> value);
+    partial void Onapg_pctChanged();
+    partial void Onspg_pctChanging(System.Nullable<decimal> value);
+    partial void Onspg_pctChanged();
+    partial void Onbpg_pctChanging(System.Nullable<decimal> value);
+    partial void Onbpg_pctChanged();
+    partial void Onpct_contributionChanging(System.Nullable<decimal> value);
+    partial void Onpct_contributionChanged();
+    partial void Onwin_pct_contributionChanging(System.Nullable<decimal> value);
+    partial void Onwin_pct_contributionChanged();
+    partial void Onpct_contribution_of_winsChanging(System.Nullable<decimal> value);
+    partial void Onpct_contribution_of_winsChanged();
+    #endregion
+		
+		public NBAAdvWeeklyPlayerStat()
+		{
+			this._PlayerInfo = default(EntityRef<PlayerInfo>);
+			this._TeamInfo = default(EntityRef<TeamInfo>);
+			this._WeekInfo = default(EntityRef<WeekInfo>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_player_key", DbType="NVarChar(50)")]
+		public string player_key
+		{
+			get
+			{
+				return this._player_key;
+			}
+			set
+			{
+				if ((this._player_key != value))
+				{
+					if (this._PlayerInfo.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onplayer_keyChanging(value);
+					this.SendPropertyChanging();
+					this._player_key = value;
+					this.SendPropertyChanged("player_key");
+					this.Onplayer_keyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_team_key", DbType="NVarChar(50)")]
+		public string team_key
+		{
+			get
+			{
+				return this._team_key;
+			}
+			set
+			{
+				if ((this._team_key != value))
+				{
+					if (this._TeamInfo.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onteam_keyChanging(value);
+					this.SendPropertyChanging();
+					this._team_key = value;
+					this.SendPropertyChanged("team_key");
+					this.Onteam_keyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_week_id", DbType="Int")]
+		public System.Nullable<int> week_id
+		{
+			get
+			{
+				return this._week_id;
+			}
+			set
+			{
+				if ((this._week_id != value))
+				{
+					if (this._WeekInfo.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onweek_idChanging(value);
+					this.SendPropertyChanging();
+					this._week_id = value;
+					this.SendPropertyChanged("week_id");
+					this.Onweek_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ppg_pct", DbType="Decimal(18,0)")]
+		public System.Nullable<decimal> ppg_pct
+		{
+			get
+			{
+				return this._ppg_pct;
+			}
+			set
+			{
+				if ((this._ppg_pct != value))
+				{
+					this.Onppg_pctChanging(value);
+					this.SendPropertyChanging();
+					this._ppg_pct = value;
+					this.SendPropertyChanged("ppg_pct");
+					this.Onppg_pctChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_rpg_pct", DbType="Decimal(18,0)")]
+		public System.Nullable<decimal> rpg_pct
+		{
+			get
+			{
+				return this._rpg_pct;
+			}
+			set
+			{
+				if ((this._rpg_pct != value))
+				{
+					this.Onrpg_pctChanging(value);
+					this.SendPropertyChanging();
+					this._rpg_pct = value;
+					this.SendPropertyChanged("rpg_pct");
+					this.Onrpg_pctChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_apg_pct", DbType="Decimal(18,0)")]
+		public System.Nullable<decimal> apg_pct
+		{
+			get
+			{
+				return this._apg_pct;
+			}
+			set
+			{
+				if ((this._apg_pct != value))
+				{
+					this.Onapg_pctChanging(value);
+					this.SendPropertyChanging();
+					this._apg_pct = value;
+					this.SendPropertyChanged("apg_pct");
+					this.Onapg_pctChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_spg_pct", DbType="Decimal(18,0)")]
+		public System.Nullable<decimal> spg_pct
+		{
+			get
+			{
+				return this._spg_pct;
+			}
+			set
+			{
+				if ((this._spg_pct != value))
+				{
+					this.Onspg_pctChanging(value);
+					this.SendPropertyChanging();
+					this._spg_pct = value;
+					this.SendPropertyChanged("spg_pct");
+					this.Onspg_pctChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_bpg_pct", DbType="Decimal(18,0)")]
+		public System.Nullable<decimal> bpg_pct
+		{
+			get
+			{
+				return this._bpg_pct;
+			}
+			set
+			{
+				if ((this._bpg_pct != value))
+				{
+					this.Onbpg_pctChanging(value);
+					this.SendPropertyChanging();
+					this._bpg_pct = value;
+					this.SendPropertyChanged("bpg_pct");
+					this.Onbpg_pctChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pct_contribution", DbType="Decimal(18,0)")]
+		public System.Nullable<decimal> pct_contribution
+		{
+			get
+			{
+				return this._pct_contribution;
+			}
+			set
+			{
+				if ((this._pct_contribution != value))
+				{
+					this.Onpct_contributionChanging(value);
+					this.SendPropertyChanging();
+					this._pct_contribution = value;
+					this.SendPropertyChanged("pct_contribution");
+					this.Onpct_contributionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_win_pct_contribution", DbType="Decimal(18,0)")]
+		public System.Nullable<decimal> win_pct_contribution
+		{
+			get
+			{
+				return this._win_pct_contribution;
+			}
+			set
+			{
+				if ((this._win_pct_contribution != value))
+				{
+					this.Onwin_pct_contributionChanging(value);
+					this.SendPropertyChanging();
+					this._win_pct_contribution = value;
+					this.SendPropertyChanged("win_pct_contribution");
+					this.Onwin_pct_contributionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_pct_contribution_of_wins", DbType="Decimal(18,0)")]
+		public System.Nullable<decimal> pct_contribution_of_wins
+		{
+			get
+			{
+				return this._pct_contribution_of_wins;
+			}
+			set
+			{
+				if ((this._pct_contribution_of_wins != value))
+				{
+					this.Onpct_contribution_of_winsChanging(value);
+					this.SendPropertyChanging();
+					this._pct_contribution_of_wins = value;
+					this.SendPropertyChanged("pct_contribution_of_wins");
+					this.Onpct_contribution_of_winsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PlayerInfo_NBAAdvWeeklyPlayerStat", Storage="_PlayerInfo", ThisKey="player_key", OtherKey="player_key", IsForeignKey=true)]
+		public PlayerInfo PlayerInfo
+		{
+			get
+			{
+				return this._PlayerInfo.Entity;
+			}
+			set
+			{
+				PlayerInfo previousValue = this._PlayerInfo.Entity;
+				if (((previousValue != value) 
+							|| (this._PlayerInfo.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._PlayerInfo.Entity = null;
+						previousValue.NBAAdvWeeklyPlayerStats.Remove(this);
+					}
+					this._PlayerInfo.Entity = value;
+					if ((value != null))
+					{
+						value.NBAAdvWeeklyPlayerStats.Add(this);
+						this._player_key = value.player_key;
+					}
+					else
+					{
+						this._player_key = default(string);
+					}
+					this.SendPropertyChanged("PlayerInfo");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TeamInfo_NBAAdvWeeklyPlayerStat", Storage="_TeamInfo", ThisKey="team_key", OtherKey="team_key", IsForeignKey=true)]
+		public TeamInfo TeamInfo
+		{
+			get
+			{
+				return this._TeamInfo.Entity;
+			}
+			set
+			{
+				TeamInfo previousValue = this._TeamInfo.Entity;
+				if (((previousValue != value) 
+							|| (this._TeamInfo.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._TeamInfo.Entity = null;
+						previousValue.NBAAdvWeeklyPlayerStats.Remove(this);
+					}
+					this._TeamInfo.Entity = value;
+					if ((value != null))
+					{
+						value.NBAAdvWeeklyPlayerStats.Add(this);
+						this._team_key = value.team_key;
+					}
+					else
+					{
+						this._team_key = default(string);
+					}
+					this.SendPropertyChanged("TeamInfo");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WeekInfo_NBAAdvWeeklyPlayerStat", Storage="_WeekInfo", ThisKey="week_id", OtherKey="id", IsForeignKey=true)]
+		public WeekInfo WeekInfo
+		{
+			get
+			{
+				return this._WeekInfo.Entity;
+			}
+			set
+			{
+				WeekInfo previousValue = this._WeekInfo.Entity;
+				if (((previousValue != value) 
+							|| (this._WeekInfo.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._WeekInfo.Entity = null;
+						previousValue.NBAAdvWeeklyPlayerStats.Remove(this);
+					}
+					this._WeekInfo.Entity = value;
+					if ((value != null))
+					{
+						value.NBAAdvWeeklyPlayerStats.Add(this);
+						this._week_id = value.id;
+					}
+					else
+					{
+						this._week_id = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("WeekInfo");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.NBAWeeklyPlayerStats")]
+	public partial class NBAWeeklyPlayerStat : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _player_key;
+		
+		private string _team_key;
+		
+		private System.Nullable<int> _week_id;
+		
+		private System.Nullable<int> _games_played;
+		
+		private System.Nullable<int> _games_missed;
+		
+		private System.Nullable<int> _points;
+		
+		private System.Nullable<int> _rebounds;
+		
+		private System.Nullable<int> _assists;
+		
+		private System.Nullable<int> _steals;
+		
+		private System.Nullable<int> _blocks;
+		
+		private string _position;
+		
+		private EntityRef<PlayerInfo> _PlayerInfo;
+		
+		private EntityRef<TeamInfo> _TeamInfo;
+		
+		private EntityRef<WeekInfo> _WeekInfo;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void Onplayer_keyChanging(string value);
+    partial void Onplayer_keyChanged();
+    partial void Onteam_keyChanging(string value);
+    partial void Onteam_keyChanged();
+    partial void Onweek_idChanging(System.Nullable<int> value);
+    partial void Onweek_idChanged();
+    partial void Ongames_playedChanging(System.Nullable<int> value);
+    partial void Ongames_playedChanged();
+    partial void Ongames_missedChanging(System.Nullable<int> value);
+    partial void Ongames_missedChanged();
+    partial void OnpointsChanging(System.Nullable<int> value);
+    partial void OnpointsChanged();
+    partial void OnreboundsChanging(System.Nullable<int> value);
+    partial void OnreboundsChanged();
+    partial void OnassistsChanging(System.Nullable<int> value);
+    partial void OnassistsChanged();
+    partial void OnstealsChanging(System.Nullable<int> value);
+    partial void OnstealsChanged();
+    partial void OnblocksChanging(System.Nullable<int> value);
+    partial void OnblocksChanged();
+    partial void OnpositionChanging(string value);
+    partial void OnpositionChanged();
+    #endregion
+		
+		public NBAWeeklyPlayerStat()
+		{
+			this._PlayerInfo = default(EntityRef<PlayerInfo>);
+			this._TeamInfo = default(EntityRef<TeamInfo>);
+			this._WeekInfo = default(EntityRef<WeekInfo>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_player_key", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string player_key
+		{
+			get
+			{
+				return this._player_key;
+			}
+			set
+			{
+				if ((this._player_key != value))
+				{
+					if (this._PlayerInfo.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onplayer_keyChanging(value);
+					this.SendPropertyChanging();
+					this._player_key = value;
+					this.SendPropertyChanged("player_key");
+					this.Onplayer_keyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_team_key", DbType="NVarChar(50)")]
+		public string team_key
+		{
+			get
+			{
+				return this._team_key;
+			}
+			set
+			{
+				if ((this._team_key != value))
+				{
+					if (this._TeamInfo.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onteam_keyChanging(value);
+					this.SendPropertyChanging();
+					this._team_key = value;
+					this.SendPropertyChanged("team_key");
+					this.Onteam_keyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_week_id", DbType="Int")]
+		public System.Nullable<int> week_id
+		{
+			get
+			{
+				return this._week_id;
+			}
+			set
+			{
+				if ((this._week_id != value))
+				{
+					if (this._WeekInfo.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onweek_idChanging(value);
+					this.SendPropertyChanging();
+					this._week_id = value;
+					this.SendPropertyChanged("week_id");
+					this.Onweek_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_games_played", DbType="Int")]
+		public System.Nullable<int> games_played
+		{
+			get
+			{
+				return this._games_played;
+			}
+			set
+			{
+				if ((this._games_played != value))
+				{
+					this.Ongames_playedChanging(value);
+					this.SendPropertyChanging();
+					this._games_played = value;
+					this.SendPropertyChanged("games_played");
+					this.Ongames_playedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_games_missed", DbType="Int")]
+		public System.Nullable<int> games_missed
+		{
+			get
+			{
+				return this._games_missed;
+			}
+			set
+			{
+				if ((this._games_missed != value))
+				{
+					this.Ongames_missedChanging(value);
+					this.SendPropertyChanging();
+					this._games_missed = value;
+					this.SendPropertyChanged("games_missed");
+					this.Ongames_missedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_points", DbType="Int")]
+		public System.Nullable<int> points
+		{
+			get
+			{
+				return this._points;
+			}
+			set
+			{
+				if ((this._points != value))
+				{
+					this.OnpointsChanging(value);
+					this.SendPropertyChanging();
+					this._points = value;
+					this.SendPropertyChanged("points");
+					this.OnpointsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_rebounds", DbType="Int")]
+		public System.Nullable<int> rebounds
+		{
+			get
+			{
+				return this._rebounds;
+			}
+			set
+			{
+				if ((this._rebounds != value))
+				{
+					this.OnreboundsChanging(value);
+					this.SendPropertyChanging();
+					this._rebounds = value;
+					this.SendPropertyChanged("rebounds");
+					this.OnreboundsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_assists", DbType="Int")]
+		public System.Nullable<int> assists
+		{
+			get
+			{
+				return this._assists;
+			}
+			set
+			{
+				if ((this._assists != value))
+				{
+					this.OnassistsChanging(value);
+					this.SendPropertyChanging();
+					this._assists = value;
+					this.SendPropertyChanged("assists");
+					this.OnassistsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_steals", DbType="Int")]
+		public System.Nullable<int> steals
+		{
+			get
+			{
+				return this._steals;
+			}
+			set
+			{
+				if ((this._steals != value))
+				{
+					this.OnstealsChanging(value);
+					this.SendPropertyChanging();
+					this._steals = value;
+					this.SendPropertyChanged("steals");
+					this.OnstealsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_blocks", DbType="Int")]
+		public System.Nullable<int> blocks
+		{
+			get
+			{
+				return this._blocks;
+			}
+			set
+			{
+				if ((this._blocks != value))
+				{
+					this.OnblocksChanging(value);
+					this.SendPropertyChanging();
+					this._blocks = value;
+					this.SendPropertyChanged("blocks");
+					this.OnblocksChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_position", DbType="NVarChar(10)")]
+		public string position
+		{
+			get
+			{
+				return this._position;
+			}
+			set
+			{
+				if ((this._position != value))
+				{
+					this.OnpositionChanging(value);
+					this.SendPropertyChanging();
+					this._position = value;
+					this.SendPropertyChanged("position");
+					this.OnpositionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PlayerInfo_NBAWeeklyPlayerStat", Storage="_PlayerInfo", ThisKey="player_key", OtherKey="player_key", IsForeignKey=true)]
+		public PlayerInfo PlayerInfo
+		{
+			get
+			{
+				return this._PlayerInfo.Entity;
+			}
+			set
+			{
+				PlayerInfo previousValue = this._PlayerInfo.Entity;
+				if (((previousValue != value) 
+							|| (this._PlayerInfo.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._PlayerInfo.Entity = null;
+						previousValue.NBAWeeklyPlayerStats.Remove(this);
+					}
+					this._PlayerInfo.Entity = value;
+					if ((value != null))
+					{
+						value.NBAWeeklyPlayerStats.Add(this);
+						this._player_key = value.player_key;
+					}
+					else
+					{
+						this._player_key = default(string);
+					}
+					this.SendPropertyChanged("PlayerInfo");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TeamInfo_NBAWeeklyPlayerStat", Storage="_TeamInfo", ThisKey="team_key", OtherKey="team_key", IsForeignKey=true)]
+		public TeamInfo TeamInfo
+		{
+			get
+			{
+				return this._TeamInfo.Entity;
+			}
+			set
+			{
+				TeamInfo previousValue = this._TeamInfo.Entity;
+				if (((previousValue != value) 
+							|| (this._TeamInfo.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._TeamInfo.Entity = null;
+						previousValue.NBAWeeklyPlayerStats.Remove(this);
+					}
+					this._TeamInfo.Entity = value;
+					if ((value != null))
+					{
+						value.NBAWeeklyPlayerStats.Add(this);
+						this._team_key = value.team_key;
+					}
+					else
+					{
+						this._team_key = default(string);
+					}
+					this.SendPropertyChanged("TeamInfo");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WeekInfo_NBAWeeklyPlayerStat", Storage="_WeekInfo", ThisKey="week_id", OtherKey="id", IsForeignKey=true)]
+		public WeekInfo WeekInfo
+		{
+			get
+			{
+				return this._WeekInfo.Entity;
+			}
+			set
+			{
+				WeekInfo previousValue = this._WeekInfo.Entity;
+				if (((previousValue != value) 
+							|| (this._WeekInfo.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._WeekInfo.Entity = null;
+						previousValue.NBAWeeklyPlayerStats.Remove(this);
+					}
+					this._WeekInfo.Entity = value;
+					if ((value != null))
+					{
+						value.NBAWeeklyPlayerStats.Add(this);
+						this._week_id = value.id;
+					}
+					else
+					{
+						this._week_id = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("WeekInfo");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.NBAWeeklyTeamStats")]
+	public partial class NBAWeeklyTeamStat : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _team_key;
+		
+		private System.Nullable<int> _week_id;
+		
+		private System.Nullable<int> _games_played;
+		
+		private System.Nullable<int> _games_missed;
+		
+		private System.Nullable<int> _points;
+		
+		private System.Nullable<int> _assists;
+		
+		private System.Nullable<int> _rebounds;
+		
+		private System.Nullable<int> _steals;
+		
+		private System.Nullable<int> _blocks;
+		
+		private System.Nullable<bool> _points_win;
+		
+		private System.Nullable<bool> _rebounds_win;
+		
+		private System.Nullable<bool> _assists_win;
+		
+		private System.Nullable<bool> _steals_win;
+		
+		private System.Nullable<bool> _blocks_win;
+		
+		private System.Nullable<bool> _points_tie;
+		
+		private System.Nullable<bool> _rebounds_tie;
+		
+		private System.Nullable<bool> _assists_tie;
+		
+		private System.Nullable<bool> _steals_tie;
+		
+		private System.Nullable<bool> _blocks_tie;
+		
+		private EntityRef<TeamInfo> _TeamInfo;
+		
+		private EntityRef<WeekInfo> _WeekInfo;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void Onteam_keyChanging(string value);
+    partial void Onteam_keyChanged();
+    partial void Onweek_idChanging(System.Nullable<int> value);
+    partial void Onweek_idChanged();
+    partial void Ongames_playedChanging(System.Nullable<int> value);
+    partial void Ongames_playedChanged();
+    partial void Ongames_missedChanging(System.Nullable<int> value);
+    partial void Ongames_missedChanged();
+    partial void OnpointsChanging(System.Nullable<int> value);
+    partial void OnpointsChanged();
+    partial void OnassistsChanging(System.Nullable<int> value);
+    partial void OnassistsChanged();
+    partial void OnreboundsChanging(System.Nullable<int> value);
+    partial void OnreboundsChanged();
+    partial void OnstealsChanging(System.Nullable<int> value);
+    partial void OnstealsChanged();
+    partial void OnblocksChanging(System.Nullable<int> value);
+    partial void OnblocksChanged();
+    partial void Onpoints_winChanging(System.Nullable<bool> value);
+    partial void Onpoints_winChanged();
+    partial void Onrebounds_winChanging(System.Nullable<bool> value);
+    partial void Onrebounds_winChanged();
+    partial void Onassists_winChanging(System.Nullable<bool> value);
+    partial void Onassists_winChanged();
+    partial void Onsteals_winChanging(System.Nullable<bool> value);
+    partial void Onsteals_winChanged();
+    partial void Onblocks_winChanging(System.Nullable<bool> value);
+    partial void Onblocks_winChanged();
+    partial void Onpoints_tieChanging(System.Nullable<bool> value);
+    partial void Onpoints_tieChanged();
+    partial void Onrebounds_tieChanging(System.Nullable<bool> value);
+    partial void Onrebounds_tieChanged();
+    partial void Onassists_tieChanging(System.Nullable<bool> value);
+    partial void Onassists_tieChanged();
+    partial void Onsteals_tieChanging(System.Nullable<bool> value);
+    partial void Onsteals_tieChanged();
+    partial void Onblocks_tieChanging(System.Nullable<bool> value);
+    partial void Onblocks_tieChanged();
+    #endregion
+		
+		public NBAWeeklyTeamStat()
+		{
+			this._TeamInfo = default(EntityRef<TeamInfo>);
+			this._WeekInfo = default(EntityRef<WeekInfo>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_team_key", DbType="NVarChar(50)")]
+		public string team_key
+		{
+			get
+			{
+				return this._team_key;
+			}
+			set
+			{
+				if ((this._team_key != value))
+				{
+					if (this._TeamInfo.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onteam_keyChanging(value);
+					this.SendPropertyChanging();
+					this._team_key = value;
+					this.SendPropertyChanged("team_key");
+					this.Onteam_keyChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_week_id", DbType="Int")]
+		public System.Nullable<int> week_id
+		{
+			get
+			{
+				return this._week_id;
+			}
+			set
+			{
+				if ((this._week_id != value))
+				{
+					if (this._WeekInfo.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.Onweek_idChanging(value);
+					this.SendPropertyChanging();
+					this._week_id = value;
+					this.SendPropertyChanged("week_id");
+					this.Onweek_idChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_games_played", DbType="Int")]
+		public System.Nullable<int> games_played
+		{
+			get
+			{
+				return this._games_played;
+			}
+			set
+			{
+				if ((this._games_played != value))
+				{
+					this.Ongames_playedChanging(value);
+					this.SendPropertyChanging();
+					this._games_played = value;
+					this.SendPropertyChanged("games_played");
+					this.Ongames_playedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_games_missed", DbType="Int")]
+		public System.Nullable<int> games_missed
+		{
+			get
+			{
+				return this._games_missed;
+			}
+			set
+			{
+				if ((this._games_missed != value))
+				{
+					this.Ongames_missedChanging(value);
+					this.SendPropertyChanging();
+					this._games_missed = value;
+					this.SendPropertyChanged("games_missed");
+					this.Ongames_missedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_points", DbType="Int")]
+		public System.Nullable<int> points
+		{
+			get
+			{
+				return this._points;
+			}
+			set
+			{
+				if ((this._points != value))
+				{
+					this.OnpointsChanging(value);
+					this.SendPropertyChanging();
+					this._points = value;
+					this.SendPropertyChanged("points");
+					this.OnpointsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_assists", DbType="Int")]
+		public System.Nullable<int> assists
+		{
+			get
+			{
+				return this._assists;
+			}
+			set
+			{
+				if ((this._assists != value))
+				{
+					this.OnassistsChanging(value);
+					this.SendPropertyChanging();
+					this._assists = value;
+					this.SendPropertyChanged("assists");
+					this.OnassistsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_rebounds", DbType="Int")]
+		public System.Nullable<int> rebounds
+		{
+			get
+			{
+				return this._rebounds;
+			}
+			set
+			{
+				if ((this._rebounds != value))
+				{
+					this.OnreboundsChanging(value);
+					this.SendPropertyChanging();
+					this._rebounds = value;
+					this.SendPropertyChanged("rebounds");
+					this.OnreboundsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_steals", DbType="Int")]
+		public System.Nullable<int> steals
+		{
+			get
+			{
+				return this._steals;
+			}
+			set
+			{
+				if ((this._steals != value))
+				{
+					this.OnstealsChanging(value);
+					this.SendPropertyChanging();
+					this._steals = value;
+					this.SendPropertyChanged("steals");
+					this.OnstealsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_blocks", DbType="Int")]
+		public System.Nullable<int> blocks
+		{
+			get
+			{
+				return this._blocks;
+			}
+			set
+			{
+				if ((this._blocks != value))
+				{
+					this.OnblocksChanging(value);
+					this.SendPropertyChanging();
+					this._blocks = value;
+					this.SendPropertyChanged("blocks");
+					this.OnblocksChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_points_win", DbType="Bit")]
+		public System.Nullable<bool> points_win
+		{
+			get
+			{
+				return this._points_win;
+			}
+			set
+			{
+				if ((this._points_win != value))
+				{
+					this.Onpoints_winChanging(value);
+					this.SendPropertyChanging();
+					this._points_win = value;
+					this.SendPropertyChanged("points_win");
+					this.Onpoints_winChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_rebounds_win", DbType="Bit")]
+		public System.Nullable<bool> rebounds_win
+		{
+			get
+			{
+				return this._rebounds_win;
+			}
+			set
+			{
+				if ((this._rebounds_win != value))
+				{
+					this.Onrebounds_winChanging(value);
+					this.SendPropertyChanging();
+					this._rebounds_win = value;
+					this.SendPropertyChanged("rebounds_win");
+					this.Onrebounds_winChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_assists_win", DbType="Bit")]
+		public System.Nullable<bool> assists_win
+		{
+			get
+			{
+				return this._assists_win;
+			}
+			set
+			{
+				if ((this._assists_win != value))
+				{
+					this.Onassists_winChanging(value);
+					this.SendPropertyChanging();
+					this._assists_win = value;
+					this.SendPropertyChanged("assists_win");
+					this.Onassists_winChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_steals_win", DbType="Bit")]
+		public System.Nullable<bool> steals_win
+		{
+			get
+			{
+				return this._steals_win;
+			}
+			set
+			{
+				if ((this._steals_win != value))
+				{
+					this.Onsteals_winChanging(value);
+					this.SendPropertyChanging();
+					this._steals_win = value;
+					this.SendPropertyChanged("steals_win");
+					this.Onsteals_winChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_blocks_win", DbType="Bit")]
+		public System.Nullable<bool> blocks_win
+		{
+			get
+			{
+				return this._blocks_win;
+			}
+			set
+			{
+				if ((this._blocks_win != value))
+				{
+					this.Onblocks_winChanging(value);
+					this.SendPropertyChanging();
+					this._blocks_win = value;
+					this.SendPropertyChanged("blocks_win");
+					this.Onblocks_winChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_points_tie", DbType="Bit")]
+		public System.Nullable<bool> points_tie
+		{
+			get
+			{
+				return this._points_tie;
+			}
+			set
+			{
+				if ((this._points_tie != value))
+				{
+					this.Onpoints_tieChanging(value);
+					this.SendPropertyChanging();
+					this._points_tie = value;
+					this.SendPropertyChanged("points_tie");
+					this.Onpoints_tieChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_rebounds_tie", DbType="Bit")]
+		public System.Nullable<bool> rebounds_tie
+		{
+			get
+			{
+				return this._rebounds_tie;
+			}
+			set
+			{
+				if ((this._rebounds_tie != value))
+				{
+					this.Onrebounds_tieChanging(value);
+					this.SendPropertyChanging();
+					this._rebounds_tie = value;
+					this.SendPropertyChanged("rebounds_tie");
+					this.Onrebounds_tieChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_assists_tie", DbType="Bit")]
+		public System.Nullable<bool> assists_tie
+		{
+			get
+			{
+				return this._assists_tie;
+			}
+			set
+			{
+				if ((this._assists_tie != value))
+				{
+					this.Onassists_tieChanging(value);
+					this.SendPropertyChanging();
+					this._assists_tie = value;
+					this.SendPropertyChanged("assists_tie");
+					this.Onassists_tieChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_steals_tie", DbType="Bit")]
+		public System.Nullable<bool> steals_tie
+		{
+			get
+			{
+				return this._steals_tie;
+			}
+			set
+			{
+				if ((this._steals_tie != value))
+				{
+					this.Onsteals_tieChanging(value);
+					this.SendPropertyChanging();
+					this._steals_tie = value;
+					this.SendPropertyChanged("steals_tie");
+					this.Onsteals_tieChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_blocks_tie", DbType="Bit")]
+		public System.Nullable<bool> blocks_tie
+		{
+			get
+			{
+				return this._blocks_tie;
+			}
+			set
+			{
+				if ((this._blocks_tie != value))
+				{
+					this.Onblocks_tieChanging(value);
+					this.SendPropertyChanging();
+					this._blocks_tie = value;
+					this.SendPropertyChanged("blocks_tie");
+					this.Onblocks_tieChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="TeamInfo_NBAWeeklyTeamStat", Storage="_TeamInfo", ThisKey="team_key", OtherKey="team_key", IsForeignKey=true)]
+		public TeamInfo TeamInfo
+		{
+			get
+			{
+				return this._TeamInfo.Entity;
+			}
+			set
+			{
+				TeamInfo previousValue = this._TeamInfo.Entity;
+				if (((previousValue != value) 
+							|| (this._TeamInfo.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._TeamInfo.Entity = null;
+						previousValue.NBAWeeklyTeamStats.Remove(this);
+					}
+					this._TeamInfo.Entity = value;
+					if ((value != null))
+					{
+						value.NBAWeeklyTeamStats.Add(this);
+						this._team_key = value.team_key;
+					}
+					else
+					{
+						this._team_key = default(string);
+					}
+					this.SendPropertyChanged("TeamInfo");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WeekInfo_NBAWeeklyTeamStat", Storage="_WeekInfo", ThisKey="week_id", OtherKey="id", IsForeignKey=true)]
+		public WeekInfo WeekInfo
+		{
+			get
+			{
+				return this._WeekInfo.Entity;
+			}
+			set
+			{
+				WeekInfo previousValue = this._WeekInfo.Entity;
+				if (((previousValue != value) 
+							|| (this._WeekInfo.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._WeekInfo.Entity = null;
+						previousValue.NBAWeeklyTeamStats.Remove(this);
+					}
+					this._WeekInfo.Entity = value;
+					if ((value != null))
+					{
+						value.NBAWeeklyTeamStats.Add(this);
+						this._week_id = value.id;
+					}
+					else
+					{
+						this._week_id = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("WeekInfo");
 				}

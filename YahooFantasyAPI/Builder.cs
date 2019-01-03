@@ -29,13 +29,12 @@ namespace YahooFantasyAPI
 			List<LeagueInfo> leagues = AddLeagueData(game);
 			foreach(LeagueInfo li in leagues)
 			{
-				IEnumerable<MatchupInfo> matchups = li.MatchupInfos.Where(mi => mi.endDate.HasValue && mi.endDate < DateTime.Now);
-				foreach(MatchupInfo matchup in matchups)
+				IEnumerable<WeekInfo> weeks = li.WeekInfos.Where(wi => (wi.startDate < DateTime.Now.Date && !wi.lastLoadDate.HasValue) || (wi.lastLoadDate.HasValue && wi.lastLoadDate.Value < wi.endDate.AddDays(2)));
+				foreach (WeekInfo week in weeks)
 				{
-					if(!matchup.TeamInfo.NBAWeeklyTeamStats.Any(s => s.week == matchup.week))
-					{
-
-					}
+					AddWeeklyTeamData(li.league_key, week.week);
+					week.lastLoadDate = DateTime.Now;
+					_sportsData.SubmitChanges();
 				}
 			}
 			
@@ -73,62 +72,68 @@ namespace YahooFantasyAPI
 			List<League> leagues = League.GetLeagues(_yahoo, gameKey);
 			foreach (League league in leagues)
 			{
-				LeagueInfo li = league.CreateLeagueInfo();
-				leagueInfos.Add(li);
-				if (!_sportsData.LeagueInfos.Any(l => l.league_key == li.league_key))
+				LeagueInfo li = _sportsData.LeagueInfos.SingleOrDefault(l => l.league_key == league.LeagueKey);
+				if (li == null)
 				{
+					li = league.CreateLeagueInfo();
 					_sportsData.LeagueInfos.InsertOnSubmit(li);
 					_sportsData.SubmitChanges();
 				}
+				leagueInfos.Add(li);
 
-				List<Team> teams = Team.GetTeams(_yahoo, li.league_key);
-				foreach (Team team in teams)
+				if(li.TeamInfos.Count == 0)
 				{
-					TeamInfo ti = team.CreateTeamInfo();
-					if (!_sportsData.TeamInfos.Any(t => t.team_key == ti.team_key))
+					List<Team> teams = Team.GetTeams(_yahoo, li.league_key);
+					foreach (Team team in teams)
 					{
-						_sportsData.TeamInfos.InsertOnSubmit(ti);
-					}
-					_sportsData.SubmitChanges();
-				}
-				foreach (Team team in teams)
-				{
-					// Need to make sure to loop through all teams prior to this and make sure they are in the DB, otherwise you get foriegn key errors because teams don't exist
-					List<Matchup> matchups = Matchup.GetMatchups(_yahoo, team.TeamKey);
-					foreach(Matchup matchup in matchups)
-					{
-						MatchupInfo mi = matchup.CreateMatchup();
-						if(!_sportsData.MatchupInfos.Any(m => m.week == mi.week && m.league_key == mi.league_key && ((m.team1_key == mi.team1_key && m.team2_key == mi.team2_key) || (m.team1_key == mi.team2_key && m.team2_key == mi.team1_key)) ))
+						TeamInfo ti = team.CreateTeamInfo();
+						if (!_sportsData.TeamInfos.Any(t => t.team_key == ti.team_key))
 						{
-							_sportsData.MatchupInfos.InsertOnSubmit(mi);
+							_sportsData.TeamInfos.InsertOnSubmit(ti);
 						}
 					}
 					_sportsData.SubmitChanges();
+				}
+				
+				foreach (TeamInfo ti in li.TeamInfos)
+				{
+					if (li.WeekInfos.Count == 0 || (ti.MatchupInfos.Count + ti.MatchupInfos1.Count != li.WeekInfos.Count))
+					{
+						// Need to make sure to loop through all teams prior to this and make sure they are in the DB, otherwise you get foriegn key errors because teams don't exist
+						List<Matchup> matchups = Matchup.GetMatchups(_yahoo, ti.team_key);
+						foreach (Matchup matchup in matchups)
+						{
+							WeekInfo wi = _sportsData.WeekInfos.SingleOrDefault(w => w.league_key == matchup.LeagueKey && w.week == matchup.Week);
+							if (wi == null)
+							{
+								wi = matchup.CreateWeek();
+								_sportsData.WeekInfos.InsertOnSubmit(wi);
+								_sportsData.SubmitChanges();
+							}
+
+							MatchupInfo mi = matchup.CreateMatchup(wi);
+							if (!_sportsData.MatchupInfos.Any(m => m.week_id == mi.week_id && m.league_key == mi.league_key && ((m.team1_key == mi.team1_key && m.team2_key == mi.team2_key) || (m.team1_key == mi.team2_key && m.team2_key == mi.team1_key))))
+							{
+								_sportsData.MatchupInfos.InsertOnSubmit(mi);
+							}
+						}
+						_sportsData.SubmitChanges();
+					}
 				}
 			}
 			return leagueInfos;
 		}
 
-		public void AddWeeklyData(string leagueKey, int week)
+		public void AddWeeklyTeamData(string leagueKey, int week)
 		{
+			WeekInfo weekInfo = _sportsData.GetWeek(leagueKey, week);
 			foreach(WeeklyTeamStats teamstats in WeeklyTeamStats.GetWeeklyTeamStats(_yahoo, leagueKey, week))
 			{
-				NBAWeeklyTeamStat wts = teamstats.CreateWeeklyTeamStats();
-				if(_sportsData.NBAWeeklyTeamStats.Any(s => ((s.week == wts.week) && (s.team_key == wts.team_key))))
+				NBAWeeklyTeamStat wts = teamstats.CreateWeeklyTeamStats(weekInfo);
+				NBAWeeklyTeamStat existingWts = _sportsData.NBAWeeklyTeamStats.SingleOrDefault(s => ((s.week_id == wts.week_id) && (s.team_key == wts.team_key)));
+				if (existingWts != null)
 				{
-					NBAWeeklyTeamStat existingWts = _sportsData.NBAWeeklyTeamStats.Single(s => ((s.week == wts.week) && (s.team_key == wts.team_key)));
-					existingWts.games_played = wts.games_played;
-					existingWts.games_missed = wts.games_missed;
-					existingWts.points = wts.points;
-					existingWts.rebounds = wts.rebounds;
-					existingWts.assists = wts.assists;
-					existingWts.steals = wts.steals;
-					existingWts.blocks = wts.blocks;
-					existingWts.points_win = wts.points_win;
-					existingWts.rebounds_win = wts.rebounds_win;
-					existingWts.assists_win = wts.assists_win;
-					existingWts.steals_win = wts.steals_win;
-					existingWts.blocks_win = wts.blocks_win;
+					existingWts.UpdateWeeklyTeamStats(wts);
 				}
 				else
 				{

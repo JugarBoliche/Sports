@@ -261,11 +261,12 @@ namespace YahooDesktop
 
 					//League league = League.GetLeague(yahoo, "375", "105375");
 					//List<League> leagues = League.GetLeagues(yahoo, "375");
-					Builder builder = new Builder(_yahoo);
-					builder.AddGameData();
-					builder.AddLeagueData("nba");
-					//builder.AddWeeklyData("385.l.105375", 1);
-					builder.AddWeeklyData("385.l.91256", 1);
+					//Builder builder = new Builder(_yahoo);
+					////builder.AddGameData();
+					////builder.AddLeagueData("nba");
+					//////builder.AddWeeklyData("385.l.105375", 1);
+					////builder.AddWeeklyData("385.l.91256", 1);
+					//builder.PopulateEverything("nba");
 					return;
 					Game nbaGame = Game.GetGame(_yahoo, "nba"); //new Game(yahoo.ExecuteMethod(@"game/nba"));
 					List<League> currentNBALeagues = nbaGame.GetLeagues();
@@ -359,6 +360,12 @@ namespace YahooDesktop
 		private void btnClear_Click(object sender, EventArgs e)
 		{
 			textBoxOutput.Clear();
+		}
+
+		private void btnRunBuilder_Click(object sender, EventArgs e)
+		{
+			Builder builder = new Builder(_yahoo);
+			builder.PopulateEverything("nba");
 		}
 	}
 }
