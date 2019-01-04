@@ -34,6 +34,7 @@
 			this.txtURL = new System.Windows.Forms.TextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.btnExecute = new System.Windows.Forms.Button();
+			this.btnRunBuilder = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// btnLoginYahoo
@@ -102,11 +103,23 @@
 			this.btnExecute.UseVisualStyleBackColor = true;
 			this.btnExecute.Click += new System.EventHandler(this.btnExecute_Click);
 			// 
+			// btnRunBuilder
+			// 
+			this.btnRunBuilder.Location = new System.Drawing.Point(121, 13);
+			this.btnRunBuilder.Margin = new System.Windows.Forms.Padding(4);
+			this.btnRunBuilder.Name = "btnRunBuilder";
+			this.btnRunBuilder.Size = new System.Drawing.Size(100, 28);
+			this.btnRunBuilder.TabIndex = 6;
+			this.btnRunBuilder.Text = "Run Builder";
+			this.btnRunBuilder.UseVisualStyleBackColor = true;
+			this.btnRunBuilder.Click += new System.EventHandler(this.btnRunBuilder_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(764, 498);
+			this.Controls.Add(this.btnRunBuilder);
 			this.Controls.Add(this.btnExecute);
 			this.Controls.Add(this.label1);
 			this.Controls.Add(this.txtURL);
@@ -130,6 +143,7 @@
 		private System.Windows.Forms.TextBox txtURL;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Button btnExecute;
+		private System.Windows.Forms.Button btnRunBuilder;
 	}
 }
 

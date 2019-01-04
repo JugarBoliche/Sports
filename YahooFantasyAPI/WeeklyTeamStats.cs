@@ -14,11 +14,16 @@ namespace YahooFantasyAPI
 		private StatLine _teamStats = null;
 		private int _gamesPlayed;
 		private int _gamesMissed;
-		private decimal _ptsWin = 0;
-		private decimal _rebsWin = 0;
-		private decimal _asstsWin = 0;
-		private decimal _stlsWin = 0;
-		private decimal _blksWin = 0;
+		private bool? _ptsWin;
+		private bool? _rebsWin;
+		private bool? _asstsWin;
+		private bool? _stlsWin;
+		private bool? _blksWin;
+		private bool? _ptsTie;
+		private bool? _rebsTie;
+		private bool? _asstsTie;
+		private bool? _stlsTie;
+		private bool? _blksTie;
 
 		public WeeklyTeamStats(YahooAPI yahoo, XElement xml, string teamKey) : base(yahoo, xml)
 		{
@@ -48,31 +53,37 @@ namespace YahooFantasyAPI
 				string winningTeam = GetElementAsString(statWinnerXml, "winner_team_key");
 				bool? isTied = GetElementAsBool(statWinnerXml, "is_tied");
 
-				decimal winTotal = 0;
+				bool isWin = false;
+				bool isTie = false;
 				if(isTied.HasValue && isTied.Value)
 				{
-					winTotal = 0.5M;
+					isTie = true;
 				}
 				else if(winningTeam.Equals(teamKey))
 				{
-					winTotal = 1;
+					isWin = true;
 				}
 				switch (statID)
 				{
 					case StatLine.Pts_Stat_ID:
-						_ptsWin = winTotal;
+						_ptsWin = isWin;
+						_ptsTie = isTie;
 						break;
 					case StatLine.Rebs_Stat_ID:
-						_rebsWin = winTotal;
+						_rebsWin = isWin;
+						_rebsTie = isTie;
 						break;
 					case StatLine.Asts_Stat_ID:
-						_asstsWin = winTotal;
+						_asstsWin = isWin;
+						_asstsTie = isTie;
 						break;
 					case StatLine.Stls_Stat_ID:
-						_stlsWin = winTotal;
+						_stlsWin = isWin;
+						_stlsTie = isTie;
 						break;
 					case StatLine.Blks_Stat_ID:
-						_blksWin = winTotal;
+						_blksWin = isWin;
+						_blksTie = isTie;
 						break;
 				}
 			}
@@ -136,7 +147,7 @@ namespace YahooFantasyAPI
 			}
 		}
 
-		public decimal PtsWin
+		public bool? PtsWin
 		{
 			get
 			{
@@ -144,7 +155,7 @@ namespace YahooFantasyAPI
 			}
 		}
 
-		public decimal RebsWin
+		public bool? RebsWin
 		{
 			get
 			{
@@ -152,7 +163,7 @@ namespace YahooFantasyAPI
 			}
 		}
 
-		public decimal AsstsWin
+		public bool? AsstsWin
 		{
 			get
 			{
@@ -160,7 +171,7 @@ namespace YahooFantasyAPI
 			}
 		}
 
-		public decimal StlsWin
+		public bool? StlsWin
 		{
 			get
 			{
@@ -168,11 +179,51 @@ namespace YahooFantasyAPI
 			}
 		}
 
-		public decimal BlksWin
+		public bool? BlksWin
 		{
 			get
 			{
 				return _blksWin;
+			}
+		}
+
+		public bool? PtsTie
+		{
+			get
+			{
+				return _ptsTie;
+			}
+		}
+
+		public bool? RebsTie
+		{
+			get
+			{
+				return _rebsTie;
+			}
+		}
+
+		public bool? AsstsTie
+		{
+			get
+			{
+				return _asstsTie;
+			}
+		}
+
+		public bool? StlsTie
+		{
+			get
+			{
+				return _stlsTie;
+			}
+		}
+
+		public bool? BlksTie
+		{
+			get
+			{
+				return _blksTie;
 			}
 		}
 	}

@@ -15,6 +15,10 @@ namespace YahooFantasyAPI
 		private string _team2key;
 		private StatLine _team1Stats = null;
 		private StatLine _team2Stats = null;
+		private bool? _isPlayoff = null;
+		private bool? _isConsolation = null;
+		private DateTime? _startDate = null;
+		private DateTime? _endDate = null;
 
 		public Matchup(YahooAPI yahoo, XElement xml) : base(yahoo, xml)
 		{
