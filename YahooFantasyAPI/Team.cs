@@ -35,6 +35,7 @@ namespace YahooFantasyAPI
 			}
 			return newTeam;
 		}
+
 		public static List<Team> GetTeams(YahooAPI yahoo, string leagueKey)
 		{
 			List<Team> teams = new List<Team>();

@@ -32,12 +32,13 @@ namespace YahooFantasyAPI
 				IEnumerable<WeekInfo> weeks = li.WeekInfos.Where(wi => (wi.startDate < DateTime.Now.Date && !wi.lastLoadDate.HasValue) || (wi.lastLoadDate.HasValue && wi.lastLoadDate.Value < wi.endDate.AddDays(2)));
 				foreach (WeekInfo week in weeks)
 				{
-					AddWeeklyTeamData(li.league_key, week.week);
+					AddWeeklyTeamData(li.league_key, week);
 					week.lastLoadDate = DateTime.Now;
 					_sportsData.SubmitChanges();
+
+					AddWeeklyIndividualData(li, week);
 				}
-			}
-			
+			}			
 		}
 
 		public void AddGameData()
@@ -124,12 +125,11 @@ namespace YahooFantasyAPI
 			return leagueInfos;
 		}
 
-		public void AddWeeklyTeamData(string leagueKey, int week)
+		public void AddWeeklyTeamData(string leagueKey, WeekInfo week)
 		{
-			WeekInfo weekInfo = _sportsData.GetWeek(leagueKey, week);
-			foreach(WeeklyTeamStats teamstats in WeeklyTeamStats.GetWeeklyTeamStats(_yahoo, leagueKey, week))
+			foreach(WeeklyTeamStats teamstats in WeeklyTeamStats.GetWeeklyTeamStats(_yahoo, leagueKey, week.week))
 			{
-				NBAWeeklyTeamStat wts = teamstats.CreateWeeklyTeamStats(weekInfo);
+				NBAWeeklyTeamStat wts = teamstats.CreateWeeklyTeamStats(week);
 				NBAWeeklyTeamStat existingWts = _sportsData.NBAWeeklyTeamStats.SingleOrDefault(s => ((s.week_id == wts.week_id) && (s.team_key == wts.team_key)));
 				if (existingWts != null)
 				{
@@ -140,6 +140,21 @@ namespace YahooFantasyAPI
 					_sportsData.NBAWeeklyTeamStats.InsertOnSubmit(wts);
 				}
 				_sportsData.SubmitChanges();
+			}
+		}
+
+		public void AddWeeklyIndividualData(LeagueInfo league, WeekInfo week)
+		{
+			foreach(TeamInfo team in league.TeamInfos)
+			{
+				List<WeekPlayerStats> weekStats = WeekPlayerStats.GetWeeklyPlayerStats(_yahoo, team.team_key, week.week);
+				List<DatePlayerStats> dateStats = new List<DatePlayerStats>();
+				DateTime date = week.startDate;
+				while(date <= week.endDate)
+				{
+					dateStats.AddRange(DatePlayerStats.GetDatePlayerStats(_yahoo, team.team_key, date));
+					date = date.AddDays(1);
+				}
 			}
 		}
 	}
