@@ -9,9 +9,9 @@ namespace YahooFantasyAPI
 {
 	public class WeekPlayerStats : PlayerStats
 	{
-		public WeekPlayerStats(YahooAPI yahoo, XElement xml, string playerKey) : base(yahoo, xml, playerKey)
+		public WeekPlayerStats(YahooAPI yahoo, XElement xml, string teamKey) : base(yahoo, xml, teamKey)
 		{
-			if(!"week".Equals(_coverageType, StringComparison.CurrentCultureIgnoreCase) || !_week.HasValue)
+			if(Coverage != CoverageType.Week)
 			{
 				throw new Exception("Stats do not represent a week player stats, or the week information is missing.");
 			}
@@ -23,20 +23,16 @@ namespace YahooFantasyAPI
 			XDocument xDoc = yahoo.ExecuteMethod(string.Format(@"team/{0}/players/stats;type=week;week={1}", teamKey, week));
 			foreach (XElement descendantXml in xDoc.Descendants(_yns + "player"))
 			{
-				XElement playerKeyXml = descendantXml.Element(_yns + "player_key");
-				if (playerKeyXml == null)
-					throw new Exception("Couldn't find player_key in stats");
-				string playerKey = playerKeyXml.Value;
-				playerStats.Add(new WeekPlayerStats(yahoo, descendantXml, playerKey));
+				playerStats.Add(new WeekPlayerStats(yahoo, descendantXml, teamKey));
 			}
 			return playerStats;
 		}
 
-		public int Week
+		public new int Week
 		{
 			get
 			{
-				return _week.Value;
+				return base.Week.Value;
 			}
 		}
 	}

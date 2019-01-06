@@ -15,9 +15,9 @@ namespace YahooFantasyAPI
 	}
 	public class DatePlayerStats : PlayerStats
 	{
-		public DatePlayerStats(YahooAPI yahoo, XElement xml, string playerKey) : base(yahoo, xml, playerKey)
+		public DatePlayerStats(YahooAPI yahoo, XElement xml, string teamKey) : base(yahoo, xml, teamKey)
 		{
-			if (!"date".Equals(_coverageType, StringComparison.CurrentCultureIgnoreCase) || !_date.HasValue)
+			if (Coverage != CoverageType.Date)
 			{
 				throw new Exception("Stats do not represent a date player stats, or the dateinformation is missing.");
 			}
@@ -32,20 +32,16 @@ namespace YahooFantasyAPI
 			XDocument xDoc = yahoo.ExecuteMethod(string.Format(@"team/{0}/players/stats;type=date;date={1}", teamKey, date));
 			foreach (XElement descendantXml in xDoc.Descendants(_yns + "player"))
 			{
-				XElement playerKeyXml = descendantXml.Element(_yns + "player_key");
-				if (playerKeyXml == null)
-					throw new Exception("Couldn't find player_key in stats");
-				string playerKey = playerKeyXml.Value;
-				playerStats.Add(new DatePlayerStats(yahoo, descendantXml, playerKey));
+				playerStats.Add(new DatePlayerStats(yahoo, descendantXml, teamKey));
 			}
 			return playerStats;
 		}
 
-		public DateTime Date
+		public new DateTime Date
 		{
 			get
 			{
-				return _date.Value;
+				return base.Date.Value;
 			}
 		}
 

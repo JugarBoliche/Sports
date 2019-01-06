@@ -73,5 +73,17 @@ namespace YahooFantasyAPI
 				return Points.HasValue && Rebounds.HasValue && Assists.HasValue && Steals.HasValue && Blocks.HasValue;
 			}
 		}
+		//public bool StatsNotZero
+		//{
+		//	get
+		//	{
+		//		bool retVal = false;
+		//		if(StatsNotNull)
+		//		{
+		//			retVal = Points.Value + Rebounds.Value + Assists.Value + Steals.Value + Blocks.Value > 0;
+		//		}
+		//		return retVal;
+		//	}
+		//}
 	}
 }

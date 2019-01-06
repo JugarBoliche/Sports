@@ -115,19 +115,19 @@ namespace YahooFantasyAPI.Extensions
 			existingTeamStats.blocks_tie= updatedTeamStats.blocks_tie;
 		}
 
-		public static NBAWeeklyTeamStat CreateWeeklyTeamStats(this WeeklyTeamStats teamStats, WeekInfo week)
+		public static NBAWeeklyTeamStat CreateWeeklyTeamStats(this WeeklyTeamStats teamStats, WeekInfo week, int gamesPlayed, int gamesMissed)
 		{
-			return teamStats.CreateWeeklyTeamStats(week.id);
+			return teamStats.CreateWeeklyTeamStats(week.id, gamesPlayed, gamesMissed);
 		}
 
-		public static NBAWeeklyTeamStat CreateWeeklyTeamStats(this WeeklyTeamStats teamStats, int weekId)
+		public static NBAWeeklyTeamStat CreateWeeklyTeamStats(this WeeklyTeamStats teamStats, int weekId, int gamesPlayed, int gamesMissed)
 		{
 			NBAWeeklyTeamStat wts = new NBAWeeklyTeamStat();
 			wts.team_key = teamStats.Teamkey;
 			//wts.week_id = teamStats.Week;
 			wts.week_id = weekId;
-			wts.games_played = teamStats.GamesPlayed;
-			wts.games_missed = teamStats.GamesMissed;
+			wts.games_played = gamesPlayed;
+			wts.games_missed = gamesMissed;
 			wts.points = teamStats.TeamStats.Points;
 			wts.rebounds = teamStats.TeamStats.Rebounds;
 			wts.assists = teamStats.TeamStats.Assists;
@@ -146,10 +146,62 @@ namespace YahooFantasyAPI.Extensions
 			return wts;
 		}
 
+		public static List<NBAWeeklyPlayerStat> CreateWeeklyPlayerStats(this WeekInfo week, List<Player> roster, List<WeekPlayerStats> weekStats, List<DatePlayerStats> dailyStats)
+		{
+			List<NBAWeeklyPlayerStat> weeklyPlayerStats = new List<NBAWeeklyPlayerStat>();
+			foreach(Player player in roster.Where(p => p.IsStarting))
+			{
+				foreach(WeekPlayerStats playerWeeklyStats in weekStats.Where(s => s.PlayerKey == player.PlayerKey))
+				{
+					List<DatePlayerStats> playerDailyStats = dailyStats.Where(s => s.PlayerKey == player.PlayerKey).ToList();
+					int gamesPlayed = playerDailyStats.Count(s => s.Status == PlayedStatus.Played);
+					int gamesMissed = playerDailyStats.Count(s => s.Status == PlayedStatus.DNP);
+					weeklyPlayerStats.Add(week.CreateWeeklyPlayerStat(playerWeeklyStats, gamesPlayed, gamesMissed, player.SelectedPosition));
+				}
+			}
+			return weeklyPlayerStats;
+		}
+
+		public static NBAWeeklyPlayerStat CreateWeeklyPlayerStat(this WeekInfo week, WeekPlayerStats playerWeeklyStats, int gamesPlayed, int gamesMissed, string position)
+		{
+			NBAWeeklyPlayerStat weeklyPlayerStats = new NBAWeeklyPlayerStat();
+			weeklyPlayerStats.player_key = playerWeeklyStats.PlayerKey;
+			weeklyPlayerStats.team_key = playerWeeklyStats.TeamKey;
+			weeklyPlayerStats.week_id = week.id;
+			weeklyPlayerStats.games_played = gamesPlayed;
+			weeklyPlayerStats.games_missed = gamesMissed;
+			weeklyPlayerStats.points = playerWeeklyStats.Stats.Points;
+			weeklyPlayerStats.rebounds = playerWeeklyStats.Stats.Rebounds;
+			weeklyPlayerStats.assists = playerWeeklyStats.Stats.Assists;
+			weeklyPlayerStats.steals = playerWeeklyStats.Stats.Steals;
+			weeklyPlayerStats.blocks = playerWeeklyStats.Stats.Blocks;
+			weeklyPlayerStats.position = position;
+			return weeklyPlayerStats;
+		}
+
+		public static void UpdateWeeklyPlayerStat(this NBAWeeklyPlayerStat existingStats, NBAWeeklyPlayerStat newStats)
+		{
+			existingStats.player_key = newStats.player_key;
+			existingStats.team_key = newStats.team_key;
+			existingStats.week_id = newStats.week_id;
+			existingStats.games_played = newStats.games_played;
+			existingStats.games_missed = newStats.games_missed;
+			existingStats.points = newStats.points;
+			existingStats.rebounds = newStats.rebounds;
+			existingStats.assists = newStats.assists;
+			existingStats.steals = newStats.steals;
+			existingStats.blocks = newStats.blocks;
+			existingStats.position = newStats.position;
+		}
+
 		public static PlayerInfo CreatePlayerInfo(this Player player)
 		{
 			PlayerInfo pi = new PlayerInfo();
-
+			pi.player_key = player.PlayerKey;
+			pi.player_id = player.PlayerID;
+			pi.first_name = player.FirstName;
+			pi.last_name = player.LastName;
+			pi.game_key = player.PlayerKey.Split('.')[0];
 			return pi;
 		}
 

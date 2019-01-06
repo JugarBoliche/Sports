@@ -9,38 +9,37 @@ namespace YahooFantasyAPI
 {
 	public class PlayerStats : YahooObjectBase
 	{
-		private string _playerKey;
-		private StatLine _playerStats = null;
-		protected string _coverageType;
-		protected int? _week;
-		protected DateTime? _date;
-
-		public PlayerStats(YahooAPI yahoo, XElement xml, string playerKey) : base(yahoo, xml)
+		public enum CoverageType
 		{
-			// Assumes root node is <player> with a child of <player_stats> and a player_key be passed in for the player data to be extracted
-			_playerKey = playerKey;
+			Other,
+			Week,
+			Date
+		}
 
-			bool playerDataFound = false;
-			//foreach (XElement playerXml in GetDescendants("player"))
-			//{
-				if (GetElementAsString(xml, "player_key").Equals(playerKey))
-				{
-					playerDataFound = true;
-					XElement playerStats = GetElement(xml, "player_stats");
-					_playerStats = new StatLine(yahoo, playerStats);
-					_coverageType = GetElementAsString(playerStats, "coverage_type");
-					if("week".Equals(_coverageType, StringComparison.CurrentCultureIgnoreCase))
-					{
-						_week = GetElementAsInt(playerStats, "week");
-					}
-					else if ("date".Equals(_coverageType, StringComparison.CurrentCultureIgnoreCase))
-					{
-						_date = GetElementAsDateTime(playerStats, "date");
-					}
-				}
-			//}
-			if (!playerDataFound)
-				throw new Exception("Player data not found in matchup for player key provided (" + playerKey + ").");
+		private StatLine _playerStats = null;
+		private CoverageType _coverageType;
+		private string _teamKey;
+
+		public PlayerStats(YahooAPI yahoo, XElement xml, string team_Key) : base(yahoo, xml)
+		{
+			_teamKey = team_Key;
+			// Assumes root node is <player> with a child of <player_stats>
+			XElement playerStats = GetElement(xml, "player_stats");
+			_playerStats = new StatLine(yahoo, playerStats);
+			string coverageType = GetElementAsString(playerStats, "coverage_type");
+			
+			if("week".Equals(coverageType, StringComparison.CurrentCultureIgnoreCase))
+			{
+				_coverageType = CoverageType.Week;
+			}
+			else if ("date".Equals(coverageType, StringComparison.CurrentCultureIgnoreCase))
+			{
+				_coverageType = CoverageType.Date;
+			}
+			else
+			{
+				_coverageType = CoverageType.Other;
+			}
 		}
 
 
@@ -48,7 +47,15 @@ namespace YahooFantasyAPI
 		{
 			get
 			{
-				return _playerKey;
+				return GetElementAsString("player_key"); ;
+			}
+		}
+
+		public string TeamKey
+		{
+			get
+			{
+				return _teamKey;
 			}
 		}
 
@@ -57,6 +64,34 @@ namespace YahooFantasyAPI
 			get
 			{
 				return _playerStats;
+			}
+		}
+
+		protected CoverageType Coverage
+		{
+			get
+			{
+				return _coverageType;
+			}
+		}
+
+		protected int? Week
+		{
+			get
+			{
+				if (Coverage == CoverageType.Week)
+					return GetElementAsInt("week");
+				else return null;
+			}
+		}
+
+		protected DateTime? Date
+		{
+			get
+			{
+				if (Coverage == CoverageType.Date)
+					return GetElementAsDateTime("date");
+				else return null;				
 			}
 		}
 	}
