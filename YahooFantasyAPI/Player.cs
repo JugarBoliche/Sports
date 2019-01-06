@@ -18,7 +18,6 @@ namespace YahooFantasyAPI
 		public static List<Player> GetPlayers(YahooAPI yahoo, string teamKey, int week)
 		{
 			List<Player> players = new List<Player>();
-			//			XDocument xDoc = yahoo.ExecuteMethod(string.Format(@"team/{0}/players/stats;type=week;week={1}", teamKey, week));
 			XDocument xDoc = yahoo.ExecuteMethod(string.Format(@"team/{0}/roster;week={1}", teamKey, week));
 			foreach (XElement descendantXml in xDoc.Descendants(_yns + "player"))
 			{
@@ -63,15 +62,24 @@ namespace YahooFantasyAPI
 		{
 			get
 			{
-				return GetElementAsString(GetElement("selected_position"), "position");
+				string position = null;
+				XElement selectedPosition = GetElement("selected_position");
+				if (selectedPosition != null)
+				{
+					position = GetElementAsString(selectedPosition, "position");
+				}
+				return position;
 			}
 		}
 
-		public bool IsStarting
+		public bool? IsStarting
 		{
 			get
 			{
-				return SelectedPosition.Equals("G", StringComparison.CurrentCultureIgnoreCase) || SelectedPosition.Equals("F", StringComparison.CurrentCultureIgnoreCase) || SelectedPosition.Equals("C", StringComparison.CurrentCultureIgnoreCase);
+				if (string.IsNullOrEmpty(SelectedPosition))
+					return null;
+				else
+					return SelectedPosition.Equals("G", StringComparison.CurrentCultureIgnoreCase) || SelectedPosition.Equals("F", StringComparison.CurrentCultureIgnoreCase) || SelectedPosition.Equals("C", StringComparison.CurrentCultureIgnoreCase);
 			}
 		}
 	}

@@ -146,10 +146,11 @@ namespace YahooFantasyAPI.Extensions
 			return wts;
 		}
 
-		public static List<NBAWeeklyPlayerStat> CreateWeeklyPlayerStats(this WeekInfo week, List<Player> roster, List<WeekPlayerStats> weekStats, List<DatePlayerStats> dailyStats)
+		public static List<NBAWeeklyPlayerStat> CreateWeeklyPlayerStats(this WeekInfo week, List<WeekPlayerStats> weekStats, List<DatePlayerStats> dailyStats)
 		{
 			List<NBAWeeklyPlayerStat> weeklyPlayerStats = new List<NBAWeeklyPlayerStat>();
-			foreach(Player player in roster.Where(p => p.IsStarting))
+			//foreach(Player player in roster.Where(p => p.IsStarting))
+			foreach (Player player in weekStats.Select(s => s.Player).Where(p => p.IsStarting.HasValue && p.IsStarting.Value))
 			{
 				foreach(WeekPlayerStats playerWeeklyStats in weekStats.Where(s => s.PlayerKey == player.PlayerKey))
 				{

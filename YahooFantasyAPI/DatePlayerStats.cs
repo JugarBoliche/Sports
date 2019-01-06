@@ -29,7 +29,8 @@ namespace YahooFantasyAPI
 		public static List<DatePlayerStats> GetDatePlayerStats(YahooAPI yahoo, string teamKey, string date)
 		{
 			List<DatePlayerStats> playerStats = new List<DatePlayerStats>();
-			XDocument xDoc = yahoo.ExecuteMethod(string.Format(@"team/{0}/players/stats;type=date;date={1}", teamKey, date));
+			//XDocument xDoc = yahoo.ExecuteMethod(string.Format(@"team/{0}/players/stats;type=date;date={1}", teamKey, date));
+			XDocument xDoc = yahoo.ExecuteMethod(string.Format(@"team/{0}/roster;date={1}/players/stats;type=date;date={1}", teamKey, date));
 			foreach (XElement descendantXml in xDoc.Descendants(_yns + "player"))
 			{
 				playerStats.Add(new DatePlayerStats(yahoo, descendantXml, teamKey));

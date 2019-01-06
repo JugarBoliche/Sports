@@ -170,11 +170,11 @@ namespace YahooFantasyAPI
 
 		public List<NBAWeeklyPlayerStat> AddWeeklyIndividualData(LeagueInfo league, TeamInfo team, WeekInfo week)
 		{
-			List<Player> players = Player.GetPlayers(_yahoo, team.team_key, week.week);
-			foreach (Player player in players.Where(p => p.IsStarting))
+			List<WeekPlayerStats> weekStats = WeekPlayerStats.GetWeeklyPlayerStats(_yahoo, team.team_key, week.week);
+			foreach (Player player in weekStats.Select(s => s.Player).Where(p => p.IsStarting.HasValue && p.IsStarting.Value))
 			{
 				//if (!league.GameInfo.PlayerInfos.Any(p => p.player_key == player.PlayerKey))
-				if(!_sportsData.PlayerInfos.Any(p => p.game_key == league.game_key && p.player_key == player.PlayerKey))
+				if (!_sportsData.PlayerInfos.Any(p => p.game_key == league.game_key && p.player_key == player.PlayerKey))
 				{
 					PlayerInfo playerInfo = player.CreatePlayerInfo();
 					_sportsData.PlayerInfos.InsertOnSubmit(playerInfo);
@@ -182,7 +182,6 @@ namespace YahooFantasyAPI
 			}
 			_sportsData.SubmitChanges();
 
-			List<WeekPlayerStats> weekStats = WeekPlayerStats.GetWeeklyPlayerStats(_yahoo, team.team_key, week.week);
 			List<DatePlayerStats> dateStats = new List<DatePlayerStats>();
 			DateTime startDate = week.startDate.Date;
 			DateTime endDate = week.endDate.Date > DateTime.Now.Date ? DateTime.Now.Date : week.endDate.Date;
@@ -193,7 +192,7 @@ namespace YahooFantasyAPI
 			}
 
 			List<NBAWeeklyPlayerStat> retVal = new List<NBAWeeklyPlayerStat>();
-			List<NBAWeeklyPlayerStat> weeklyPlayerStats = week.CreateWeeklyPlayerStats(players, weekStats, dateStats);
+			List<NBAWeeklyPlayerStat> weeklyPlayerStats = week.CreateWeeklyPlayerStats(weekStats, dateStats);
 			foreach(NBAWeeklyPlayerStat weeklyPlayerStat in weeklyPlayerStats)
 			{
 				NBAWeeklyPlayerStat existingStats = _sportsData.NBAWeeklyPlayerStats.SingleOrDefault(s => s.week_id == weeklyPlayerStat.week_id && s.player_key == weeklyPlayerStat.player_key);

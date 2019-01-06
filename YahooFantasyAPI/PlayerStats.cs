@@ -19,6 +19,7 @@ namespace YahooFantasyAPI
 		private StatLine _playerStats = null;
 		private CoverageType _coverageType;
 		private string _teamKey;
+		private Player _player;
 
 		public PlayerStats(YahooAPI yahoo, XElement xml, string team_Key) : base(yahoo, xml)
 		{
@@ -27,8 +28,8 @@ namespace YahooFantasyAPI
 			XElement playerStats = GetElement(xml, "player_stats");
 			_playerStats = new StatLine(yahoo, playerStats);
 			string coverageType = GetElementAsString(playerStats, "coverage_type");
-			
-			if("week".Equals(coverageType, StringComparison.CurrentCultureIgnoreCase))
+
+			if ("week".Equals(coverageType, StringComparison.CurrentCultureIgnoreCase))
 			{
 				_coverageType = CoverageType.Week;
 			}
@@ -48,6 +49,18 @@ namespace YahooFantasyAPI
 			get
 			{
 				return GetElementAsString("player_key"); ;
+			}
+		}
+
+		public Player Player
+		{
+			get
+			{
+				if(_player == null)
+				{
+					_player = new Player(Yahoo, Xml);
+				}
+				return _player;
 			}
 		}
 
