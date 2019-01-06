@@ -27,17 +27,19 @@ namespace YahooFantasyAPI
 				AddGameData(game);
 			}
 			List<LeagueInfo> leagues = AddLeagueData(game);
-			foreach(LeagueInfo li in leagues)
+			foreach(LeagueInfo league in leagues)
 			{
-				IEnumerable<WeekInfo> weeks = li.WeekInfos.Where(wi => (wi.startDate < DateTime.Now.Date && !wi.lastLoadDate.HasValue) || (wi.lastLoadDate.HasValue && wi.lastLoadDate.Value < wi.endDate.AddDays(2)));
+				IEnumerable<WeekInfo> weeks = league.WeekInfos.Where(wi => (wi.startDate < DateTime.Now.Date && !wi.lastLoadDate.HasValue) || (wi.lastLoadDate.HasValue && wi.lastLoadDate.Value < wi.endDate.AddDays(2)));
 				foreach (WeekInfo week in weeks)
 				{
-					AddWeeklyTeamData(li.league_key, week.week);
+					//AddWeeklyTeamData(li.league_key, week);
+					AddWeeklyData(league, week);
 					week.lastLoadDate = DateTime.Now;
 					_sportsData.SubmitChanges();
+
+					//AddWeeklyIndividualData(li, week);
 				}
-			}
-			
+			}			
 		}
 
 		public void AddGameData()
@@ -124,12 +126,17 @@ namespace YahooFantasyAPI
 			return leagueInfos;
 		}
 
-		public void AddWeeklyTeamData(string leagueKey, int week)
+		public void AddWeeklyData(LeagueInfo league, WeekInfo week)
 		{
-			WeekInfo weekInfo = _sportsData.GetWeek(leagueKey, week);
-			foreach(WeeklyTeamStats teamstats in WeeklyTeamStats.GetWeeklyTeamStats(_yahoo, leagueKey, week))
+			foreach (WeeklyTeamStats teamstats in WeeklyTeamStats.GetWeeklyTeamStats(_yahoo, league.league_key, week.week))
 			{
-				NBAWeeklyTeamStat wts = teamstats.CreateWeeklyTeamStats(weekInfo);
+				TeamInfo team = league.TeamInfos.Single(t => t.team_key == teamstats.Teamkey);
+
+				List<NBAWeeklyPlayerStat> playerStats = AddWeeklyIndividualData(league, team, week);
+
+				int? played = playerStats.Sum(s => s.games_played);
+				int? missed = playerStats.Sum(s => s.games_missed);
+				NBAWeeklyTeamStat wts = teamstats.CreateWeeklyTeamStats(week, played == null ? 0 : played.Value, missed == null ? 0 : missed.Value);
 				NBAWeeklyTeamStat existingWts = _sportsData.NBAWeeklyTeamStats.SingleOrDefault(s => ((s.week_id == wts.week_id) && (s.team_key == wts.team_key)));
 				if (existingWts != null)
 				{
@@ -141,6 +148,68 @@ namespace YahooFantasyAPI
 				}
 				_sportsData.SubmitChanges();
 			}
+		}
+
+		//public void AddWeeklyTeamData(string leagueKey, WeekInfo week)
+		//{
+		//	foreach(WeeklyTeamStats teamstats in WeeklyTeamStats.GetWeeklyTeamStats(_yahoo, leagueKey, week.week))
+		//	{
+		//		NBAWeeklyTeamStat wts = teamstats.CreateWeeklyTeamStats(week);
+		//		NBAWeeklyTeamStat existingWts = _sportsData.NBAWeeklyTeamStats.SingleOrDefault(s => ((s.week_id == wts.week_id) && (s.team_key == wts.team_key)));
+		//		if (existingWts != null)
+		//		{
+		//			existingWts.UpdateWeeklyTeamStats(wts);
+		//		}
+		//		else
+		//		{
+		//			_sportsData.NBAWeeklyTeamStats.InsertOnSubmit(wts);
+		//		}
+		//		_sportsData.SubmitChanges();
+		//	}
+		//}
+
+		public List<NBAWeeklyPlayerStat> AddWeeklyIndividualData(LeagueInfo league, TeamInfo team, WeekInfo week)
+		{
+			List<Player> players = Player.GetPlayers(_yahoo, team.team_key, week.week);
+			foreach (Player player in players.Where(p => p.IsStarting))
+			{
+				//if (!league.GameInfo.PlayerInfos.Any(p => p.player_key == player.PlayerKey))
+				if(!_sportsData.PlayerInfos.Any(p => p.game_key == league.game_key && p.player_key == player.PlayerKey))
+				{
+					PlayerInfo playerInfo = player.CreatePlayerInfo();
+					_sportsData.PlayerInfos.InsertOnSubmit(playerInfo);
+				}
+			}
+			_sportsData.SubmitChanges();
+
+			List<WeekPlayerStats> weekStats = WeekPlayerStats.GetWeeklyPlayerStats(_yahoo, team.team_key, week.week);
+			List<DatePlayerStats> dateStats = new List<DatePlayerStats>();
+			DateTime startDate = week.startDate.Date;
+			DateTime endDate = week.endDate.Date > DateTime.Now.Date ? DateTime.Now.Date : week.endDate.Date;
+			while(startDate <= endDate)
+			{
+				dateStats.AddRange(DatePlayerStats.GetDatePlayerStats(_yahoo, team.team_key, startDate));
+				startDate = startDate.AddDays(1);
+			}
+
+			List<NBAWeeklyPlayerStat> retVal = new List<NBAWeeklyPlayerStat>();
+			List<NBAWeeklyPlayerStat> weeklyPlayerStats = week.CreateWeeklyPlayerStats(players, weekStats, dateStats);
+			foreach(NBAWeeklyPlayerStat weeklyPlayerStat in weeklyPlayerStats)
+			{
+				NBAWeeklyPlayerStat existingStats = _sportsData.NBAWeeklyPlayerStats.SingleOrDefault(s => s.week_id == weeklyPlayerStat.week_id && s.player_key == weeklyPlayerStat.player_key);
+				if(existingStats != null)
+				{
+					existingStats.UpdateWeeklyPlayerStat(weeklyPlayerStat);
+					retVal.Add(existingStats);
+				}
+				else
+				{
+					_sportsData.NBAWeeklyPlayerStats.InsertOnSubmit(weeklyPlayerStat);
+					retVal.Add(weeklyPlayerStat);
+				}
+			}				
+			_sportsData.SubmitChanges();
+			return retVal;
 		}
 	}
 }

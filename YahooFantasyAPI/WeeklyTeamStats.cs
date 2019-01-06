@@ -12,8 +12,6 @@ namespace YahooFantasyAPI
 		private int _week;
 		private string _teamkey;
 		private StatLine _teamStats = null;
-		private int _gamesPlayed;
-		private int _gamesMissed;
 		private bool? _ptsWin;
 		private bool? _rebsWin;
 		private bool? _asstsWin;
@@ -128,22 +126,6 @@ namespace YahooFantasyAPI
 			get
 			{
 				return _teamStats;
-			}
-		}
-
-		public int GamesPlayed
-		{
-			get
-			{
-				return _gamesPlayed;
-			}
-		}
-
-		public int GamesMissed
-		{
-			get
-			{
-				return _gamesMissed;
 			}
 		}
 

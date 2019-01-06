@@ -23,6 +23,7 @@ namespace YahooFantasyAPI
 			foreach(XElement descendantXml in GetDescendants(xml, "stat"))
 			{
 				string stat_id = GetElementAsString(descendantXml, "stat_id");
+				//string stat_string_value = GetElementAsString(descendantXml, "value");
 				int? stat_value = GetElementAsInt(descendantXml, "value");
 
 				if((!string.IsNullOrEmpty(stat_id)) && (stat_value.HasValue))
@@ -58,11 +59,31 @@ namespace YahooFantasyAPI
 			Steals = stls;
 			Blocks = blks;
 		}
-		
-		public int Points { get; set; }
-		public int Rebounds { get; set; }
-		public int Assists { get; set; }
-		public int Steals { get; set; }
-		public int Blocks { get; set; }
+
+		public int? Points { get; set; }
+		public int? Rebounds { get; set; }
+		public int? Assists { get; set; }
+		public int? Steals { get; set; }
+		public int? Blocks { get; set; }
+
+		public bool StatsNotNull
+		{
+			get
+			{
+				return Points.HasValue && Rebounds.HasValue && Assists.HasValue && Steals.HasValue && Blocks.HasValue;
+			}
+		}
+		//public bool StatsNotZero
+		//{
+		//	get
+		//	{
+		//		bool retVal = false;
+		//		if(StatsNotNull)
+		//		{
+		//			retVal = Points.Value + Rebounds.Value + Assists.Value + Steals.Value + Blocks.Value > 0;
+		//		}
+		//		return retVal;
+		//	}
+		//}
 	}
 }
