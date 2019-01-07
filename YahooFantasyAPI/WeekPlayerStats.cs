@@ -20,7 +20,9 @@ namespace YahooFantasyAPI
 		public static List<WeekPlayerStats> GetWeeklyPlayerStats(YahooAPI yahoo, string teamKey, int week)
 		{
 			List<WeekPlayerStats> playerStats = new List<WeekPlayerStats>();
-			XDocument xDoc = yahoo.ExecuteMethod(string.Format(@"team/{0}/players/stats;type=week;week={1}", teamKey, week));
+			//XDocument xDoc = yahoo.ExecuteMethod(string.Format(@"team/{0}/players/stats;type=week;week={1}", teamKey, week));
+			XDocument xDoc = yahoo.ExecuteMethod(string.Format(@"team/{0}/roster;week={1}/players/stats;type=week;week={1}", teamKey, week));
+			
 			foreach (XElement descendantXml in xDoc.Descendants(_yns + "player"))
 			{
 				playerStats.Add(new WeekPlayerStats(yahoo, descendantXml, teamKey));
