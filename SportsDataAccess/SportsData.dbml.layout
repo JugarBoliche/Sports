@@ -53,14 +53,14 @@
         <elementListCompartment Id="5a12fc2c-6251-49b7-a0fa-d039e60d2716" absoluteBounds="9.765, 10.21, 1.9700000000000002, 5.0569254557291661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(6.64062375 : 2.95359537760417); (6.64062375 : 14.2491682942708); (9.75 : 14.2491682942708)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(6.64062375 : 2.95359537760417); (6.64062375 : 15.0922990201823); (9.75 : 15.0922990201823)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/SportsDataDataContext/LeagueInfo/LeagueInfo_NBAAdvTotalPlayerStat" />
       <nodes>
         <classShapeMoniker Id="3b965677-57b1-4153-ad12-40bc2adac791" />
         <classShapeMoniker Id="85fb7db3-83fd-4492-8754-b592f2a19d80" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(3.34375 : 4.89589680989583); (3.34375 : 14.979921875); (9.75 : 14.979921875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(3.1875 : 4.89589680989583); (3.1875 : 14.7551675846354); (6.55729041666667 : 14.7551675846354 : JumpStart); (6.72395708333333 : 14.7551675846354 : JumpEnd); (9.75 : 14.7551675846354)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/SportsDataDataContext/PlayerInfo/PlayerInfo_NBAAdvTotalPlayerStat" />
       <nodes>
         <classShapeMoniker Id="550982e9-67a4-4232-85d2-5e4253335944" />
@@ -86,21 +86,21 @@
         <elementListCompartment Id="c8158179-914a-4413-b1b8-fbc13d7976fb" absoluteBounds="8.765, 5.835, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(7.0312525 : 2.95359537760417); (7.0312525 : 6.45839680989583); (7.82291666666667 : 6.45839680989583 : JumpStart); (7.98958333333333 : 6.45839680989583 : JumpEnd); (8.24479416666667 : 6.45839680989583 : JumpStart); (8.41146083333333 : 6.45839680989583 : JumpEnd); (8.75 : 6.45839680989583)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(7.0312525 : 2.95359537760417); (7.0312525 : 6.45839680989583); (7.88541666666667 : 6.45839680989583 : JumpStart); (8.05208333333333 : 6.45839680989583 : JumpEnd); (8.27604416666667 : 6.45839680989583 : JumpStart); (8.44271083333333 : 6.45839680989583 : JumpEnd); (8.75 : 6.45839680989583)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/SportsDataDataContext/LeagueInfo/LeagueInfo_MatchupInfo" />
       <nodes>
         <classShapeMoniker Id="3b965677-57b1-4153-ad12-40bc2adac791" />
         <classShapeMoniker Id="fa23ba2d-bfe4-48ea-afcc-cb7a5beae5e9" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(6.25 : 6.86464680989583); (8.75 : 6.86464680989583)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(6.25 : 6.86464680989583); (6.55729041666667 : 6.86464680989583 : JumpStart); (6.72395708333333 : 6.86464680989583 : JumpEnd); (7.88541666666667 : 6.86464680989583 : JumpStart); (8.05208333333333 : 6.86464680989583 : JumpEnd); (8.27604416666667 : 6.86464680989583 : JumpStart); (8.44271083333333 : 6.86464680989583 : JumpEnd); (8.75 : 6.86464680989583)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/SportsDataDataContext/TeamInfo/TeamInfo_MatchupInfo" />
       <nodes>
         <classShapeMoniker Id="5b4c8e30-c646-4fd0-9c6f-74b7b3c1f181" />
         <classShapeMoniker Id="fa23ba2d-bfe4-48ea-afcc-cb7a5beae5e9" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(6.25 : 6.66152180989583); (8.75 : 6.66152180989583)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(6.25 : 6.66152180989583); (6.55729041666667 : 6.66152180989583 : JumpStart); (6.72395708333333 : 6.66152180989583 : JumpEnd); (7.88541666666667 : 6.66152180989583 : JumpStart); (8.05208333333333 : 6.66152180989583 : JumpEnd); (8.27604416666667 : 6.66152180989583 : JumpStart); (8.44271083333333 : 6.66152180989583 : JumpEnd); (8.75 : 6.66152180989583)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/SportsDataDataContext/TeamInfo/TeamInfo_MatchupInfo1" />
       <nodes>
         <classShapeMoniker Id="5b4c8e30-c646-4fd0-9c6f-74b7b3c1f181" />
@@ -112,33 +112,6 @@
       <nodes>
         <classShapeMoniker Id="af6357d7-8a95-4d89-b455-b559ad78f25e" />
         <classShapeMoniker Id="fa23ba2d-bfe4-48ea-afcc-cb7a5beae5e9" />
-      </nodes>
-    </associationConnector>
-    <classShape Id="be5e9915-9408-4228-a5fe-faa9f15728ec" absoluteBounds="7.125, 9.75, 2, 3.1170068359375">
-      <DataClassMoniker Name="/SportsDataDataContext/NBAAdvWeeklyPlayerStat" />
-      <nestedChildShapes>
-        <elementListCompartment Id="d6b2ae67-4344-416f-b832-9800b1862d16" absoluteBounds="7.14, 10.21, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <associationConnector edgePoints="[(3.875 : 4.595400390625); (3.97916666666667 : 4.595400390625 : JumpStart); (4.14583333333333 : 4.595400390625 : JumpEnd); (5.66666666666667 : 4.595400390625 : JumpStart); (5.83333333333333 : 4.595400390625 : JumpEnd); (6.55729041666667 : 4.595400390625 : JumpStart); (6.72395708333333 : 4.595400390625 : JumpEnd); (6.94791916666667 : 4.595400390625 : JumpStart); (7.11458583333333 : 4.595400390625 : JumpEnd); (7.90625 : 4.595400390625); (7.90625 : 9.75)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/SportsDataDataContext/PlayerInfo/PlayerInfo_NBAAdvWeeklyPlayerStat" />
-      <nodes>
-        <classShapeMoniker Id="550982e9-67a4-4232-85d2-5e4253335944" />
-        <classShapeMoniker Id="be5e9915-9408-4228-a5fe-faa9f15728ec" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(6.25 : 7.61464680989583); (7.4843725 : 7.61464680989583); (7.4843725 : 9.75)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/SportsDataDataContext/TeamInfo/TeamInfo_NBAAdvWeeklyPlayerStat" />
-      <nodes>
-        <classShapeMoniker Id="5b4c8e30-c646-4fd0-9c6f-74b7b3c1f181" />
-        <classShapeMoniker Id="be5e9915-9408-4228-a5fe-faa9f15728ec" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(8.875 : 3.62424967447917); (8.3281275 : 3.62424967447917); (8.3281275 : 9.75)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/SportsDataDataContext/WeekInfo/WeekInfo_NBAAdvWeeklyPlayerStat" />
-      <nodes>
-        <classShapeMoniker Id="af6357d7-8a95-4d89-b455-b559ad78f25e" />
-        <classShapeMoniker Id="be5e9915-9408-4228-a5fe-faa9f15728ec" />
       </nodes>
     </associationConnector>
     <classShape Id="c8462c06-2853-4fc3-a55c-5d11aa0ef4eb" absoluteBounds="0.5, 9.125, 2, 3.1170068359375">
@@ -154,14 +127,14 @@
         <classShapeMoniker Id="c8462c06-2853-4fc3-a55c-5d11aa0ef4eb" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(6.09375 : 8.02089680989583); (6.09375 : 9.46875); (5.14583333333333 : 9.46875 : JumpStart); (4.97916666666667 : 9.46875 : JumpEnd); (4.14583333333333 : 9.46875 : JumpStart); (3.97916666666667 : 9.46875 : JumpEnd); (3.42708333333333 : 9.46875 : JumpStart); (3.26041666666667 : 9.46875 : JumpEnd); (2.95833333333333 : 9.46875 : JumpStart); (2.79166666666667 : 9.46875 : JumpEnd); (2.5 : 9.46875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(6.09375 : 8.02089680989583); (6.09375 : 9.4687505); (5.14583333333333 : 9.4687505 : JumpStart); (4.97916666666667 : 9.4687505 : JumpEnd); (4.14583333333333 : 9.4687505 : JumpStart); (3.97916666666667 : 9.4687505 : JumpEnd); (3.27083333333333 : 9.4687505 : JumpStart); (3.10416666666667 : 9.4687505 : JumpEnd); (2.95833333333333 : 9.4687505 : JumpStart); (2.79166666666667 : 9.4687505 : JumpEnd); (2.5 : 9.4687505)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/SportsDataDataContext/TeamInfo/TeamInfo_NBAWeeklyPlayerStat" />
       <nodes>
         <classShapeMoniker Id="5b4c8e30-c646-4fd0-9c6f-74b7b3c1f181" />
         <classShapeMoniker Id="c8462c06-2853-4fc3-a55c-5d11aa0ef4eb" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(9.875 : 4.23240397135417); (9.875 : 5.125); (8.41146083333333 : 5.125 : JumpStart); (8.24479416666667 : 5.125 : JumpEnd); (7.98958333333333 : 5.125 : JumpStart); (7.82291666666667 : 5.125 : JumpEnd); (7.11458583333333 : 5.125 : JumpStart); (6.94791916666667 : 5.125 : JumpEnd); (6.72395708333333 : 5.125 : JumpStart); (6.55729041666667 : 5.125 : JumpEnd); (5.83333333333333 : 5.125 : JumpStart); (5.66666666666667 : 5.125 : JumpEnd); (4.14583333333333 : 5.125 : JumpStart); (3.97916666666667 : 5.125 : JumpEnd); (3.42708333333333 : 5.125 : JumpStart); (3.26041666666667 : 5.125 : JumpEnd); (2.875 : 5.125); (2.875 : 10.9803804179687); (2.5 : 10.9803804179687)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(9.875 : 4.23240397135417); (9.875 : 5.125); (8.44271083333333 : 5.125 : JumpStart); (8.27604416666667 : 5.125 : JumpEnd); (8.05208333333333 : 5.125 : JumpStart); (7.88541666666667 : 5.125 : JumpEnd); (7.11458583333333 : 5.125 : JumpStart); (6.94791916666667 : 5.125 : JumpEnd); (6.72395708333333 : 5.125 : JumpStart); (6.55729041666667 : 5.125 : JumpEnd); (5.83333333333333 : 5.125 : JumpStart); (5.66666666666667 : 5.125 : JumpEnd); (4.14583333333333 : 5.125 : JumpStart); (3.97916666666667 : 5.125 : JumpEnd); (3.27083333333333 : 5.125 : JumpStart); (3.10416666666667 : 5.125 : JumpEnd); (2.875 : 5.125); (2.875 : 10.6835034179687); (2.5 : 10.6835034179687)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/SportsDataDataContext/WeekInfo/WeekInfo_NBAWeeklyPlayerStat" />
       <nodes>
         <classShapeMoniker Id="af6357d7-8a95-4d89-b455-b559ad78f25e" />
@@ -174,18 +147,45 @@
         <elementListCompartment Id="a4941c83-a68a-48bc-b550-0ef97b267f43" absoluteBounds="3.89, 10.335, 1.9700000000000002, 4.095418294270833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(5.0625 : 8.02089680989583); (5.0625 : 9.875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.0625 : 8.02089680989583); (5.0625 : 9.875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/SportsDataDataContext/TeamInfo/TeamInfo_NBAWeeklyTeamStat" />
       <nodes>
         <classShapeMoniker Id="5b4c8e30-c646-4fd0-9c6f-74b7b3c1f181" />
         <classShapeMoniker Id="6375d272-284d-4d62-91c4-3cd28f7e9b46" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(8.875 : 3.95957932291667); (8.41146083333333 : 3.95957932291667 : JumpStart); (8.24479416666667 : 3.95957932291667 : JumpEnd); (7.11458583333333 : 3.95957932291667 : JumpStart); (6.94791916666667 : 3.95957932291667 : JumpEnd); (6.72395708333333 : 3.95957932291667 : JumpStart); (6.55729041666667 : 3.95957932291667 : JumpEnd); (5.83333333333333 : 3.95957932291667 : JumpStart); (5.66666666666667 : 3.95957932291667 : JumpEnd); (4.0625 : 3.95957932291667); (4.0625 : 9.875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(8.875 : 3.95957932291667); (8.44271083333333 : 3.95957932291667 : JumpStart); (8.27604416666667 : 3.95957932291667 : JumpEnd); (7.11458583333333 : 3.95957932291667 : JumpStart); (6.94791916666667 : 3.95957932291667 : JumpEnd); (6.72395708333333 : 3.95957932291667 : JumpStart); (6.55729041666667 : 3.95957932291667 : JumpEnd); (5.83333333333333 : 3.95957932291667 : JumpStart); (5.66666666666667 : 3.95957932291667 : JumpEnd); (4.0625 : 3.95957932291667); (4.0625 : 9.875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/SportsDataDataContext/WeekInfo/WeekInfo_NBAWeeklyTeamStat" />
       <nodes>
         <classShapeMoniker Id="af6357d7-8a95-4d89-b455-b559ad78f25e" />
         <classShapeMoniker Id="6375d272-284d-4d62-91c4-3cd28f7e9b46" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="a29717fb-a72e-46c2-9e5d-c112de709259" absoluteBounds="7.25, 9.75, 2, 4.0785139973958326">
+      <DataClassMoniker Name="/SportsDataDataContext/NBAAdvWeeklyPlayerStat" />
+      <nestedChildShapes>
+        <elementListCompartment Id="670cde29-674e-45c0-9e39-16abffcb833a" absoluteBounds="7.265, 10.21, 1.9700000000000002, 3.518513997395833" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(3.875 : 4.595400390625); (3.97916666666667 : 4.595400390625 : JumpStart); (4.14583333333333 : 4.595400390625 : JumpEnd); (5.66666666666667 : 4.595400390625 : JumpStart); (5.83333333333333 : 4.595400390625 : JumpEnd); (6.55729041666667 : 4.595400390625 : JumpStart); (6.72395708333333 : 4.595400390625 : JumpEnd); (6.94791916666667 : 4.595400390625 : JumpStart); (7.11458583333333 : 4.595400390625 : JumpEnd); (7.96875 : 4.595400390625); (7.96875 : 9.75)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/SportsDataDataContext/PlayerInfo/PlayerInfo_NBAAdvWeeklyPlayerStat" />
+      <nodes>
+        <classShapeMoniker Id="550982e9-67a4-4232-85d2-5e4253335944" />
+        <classShapeMoniker Id="a29717fb-a72e-46c2-9e5d-c112de709259" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(6.2031275 : 8.02089680989583); (6.2031275 : 9.78125); (6.55729041666667 : 9.78125 : JumpStart); (6.72395708333333 : 9.78125 : JumpEnd); (7.25 : 9.78125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/SportsDataDataContext/TeamInfo/TeamInfo_NBAAdvWeeklyPlayerStat" />
+      <nodes>
+        <classShapeMoniker Id="5b4c8e30-c646-4fd0-9c6f-74b7b3c1f181" />
+        <classShapeMoniker Id="a29717fb-a72e-46c2-9e5d-c112de709259" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.875 : 3.09318850585938); (8.3593775 : 3.09318850585938); (8.3593775 : 9.75)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/SportsDataDataContext/WeekInfo/WeekInfo_NBAAdvWeeklyPlayerStat" />
+      <nodes>
+        <classShapeMoniker Id="af6357d7-8a95-4d89-b455-b559ad78f25e" />
+        <classShapeMoniker Id="a29717fb-a72e-46c2-9e5d-c112de709259" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>

@@ -29,6 +29,8 @@ namespace YahooFantasyAPI
 			List<LeagueInfo> leagues = AddLeagueData(game);
 			foreach(LeagueInfo league in leagues)
 			{
+				AddAdvancedWeeklyStats(league, league.WeekInfos.First());
+
 				IEnumerable<WeekInfo> weeks = league.WeekInfos.Where(wi => (wi.startDate < DateTime.Now.Date && !wi.lastLoadDate.HasValue) || (wi.lastLoadDate.HasValue && wi.lastLoadDate.Value < wi.endDate.AddDays(2)));
 				foreach (WeekInfo week in weeks)
 				{
@@ -40,6 +42,15 @@ namespace YahooFantasyAPI
 					//AddWeeklyIndividualData(li, week);
 				}
 			}			
+		}
+
+		public void PopulateAdvancedStats(string game)
+		{
+			List<LeagueInfo> leagues = AddLeagueData(game);
+			foreach (LeagueInfo league in leagues)
+			{
+				IEnumerable<WeekInfo> weeks = league.WeekInfos.Where(wi => (wi.startDate < DateTime.Now.Date && !wi.lastLoadDate.HasValue) || (wi.lastLoadDate.HasValue && wi.lastLoadDate.Value < wi.endDate.AddDays(2)));
+			}
 		}
 
 		public void AddGameData()
@@ -208,6 +219,55 @@ namespace YahooFantasyAPI
 				}
 			}				
 			_sportsData.SubmitChanges();
+			return retVal;
+		}
+
+		public void AddAdvancedWeeklyStats(LeagueInfo league, WeekInfo week)
+		{
+			foreach(TeamInfo team in league.TeamInfos)
+			{
+				foreach(NBAWeeklyPlayerStat playerStats in team.NBAWeeklyPlayerStats)
+				{
+					NBAWeeklyTeamStat teamStats = team.NBAWeeklyTeamStats.Single(s => s.week_id == week.id);
+					NBAAdvWeeklyPlayerStat advPlayerStats = new NBAAdvWeeklyPlayerStat();
+					advPlayerStats.player_key = playerStats.player_key;
+					advPlayerStats.team_key = team.team_key;
+					advPlayerStats.week_id = week.id;
+					advPlayerStats.ppg_pct = (decimal)playerStats.points.Value / teamStats.points.Value;
+					advPlayerStats.rpg_pct = (decimal)playerStats.rebounds.Value / teamStats.rebounds.Value;
+					advPlayerStats.apg_pct = (decimal)playerStats.assists.Value / teamStats.assists.Value;
+					advPlayerStats.spg_pct = (decimal)playerStats.steals.Value / teamStats.steals.Value;
+					advPlayerStats.bpg_pct = (decimal)playerStats.blocks.Value / teamStats.blocks.Value;
+					advPlayerStats.points_win = (decimal)teamStats.points_win.ToInt() + ((decimal)teamStats.points_tie.ToInt() / 2);
+					advPlayerStats.rebounds_win = (decimal)teamStats.rebounds_win.ToInt() + ((decimal)teamStats.rebounds_tie.ToInt() / 2);
+					advPlayerStats.assists_win = (decimal)teamStats.assists_win.ToInt() + ((decimal)teamStats.assists_tie.ToInt() / 2);
+					advPlayerStats.steals_win = (decimal)teamStats.steals_win.ToInt() + ((decimal)teamStats.steals_tie.ToInt() / 2);
+					advPlayerStats.blocks_win = (decimal)teamStats.blocks_win.ToInt() + ((decimal)teamStats.blocks_tie.ToInt() / 2);
+					advPlayerStats.pct_contribution = advPlayerStats.ppg_pct + advPlayerStats.rpg_pct + advPlayerStats.apg_pct + advPlayerStats.spg_pct + advPlayerStats.bpg_pct;
+					advPlayerStats.win_pct_contribution = 0;
+					advPlayerStats.win_pct_contribution = advPlayerStats.points_win * advPlayerStats.ppg_pct;
+					advPlayerStats.win_pct_contribution += CalcWinPctContribution(teamStats.points_win, teamStats.points_tie, advPlayerStats.ppg_pct);
+					advPlayerStats.win_pct_contribution += CalcWinPctContribution(teamStats.rebounds_win, teamStats.rebounds_tie, advPlayerStats.rpg_pct);
+					advPlayerStats.win_pct_contribution += CalcWinPctContribution(teamStats.assists_win, teamStats.assists_tie, advPlayerStats.apg_pct);
+					advPlayerStats.win_pct_contribution += CalcWinPctContribution(teamStats.steals_win, teamStats.steals_tie, advPlayerStats.spg_pct);
+					advPlayerStats.win_pct_contribution += CalcWinPctContribution(teamStats.blocks_win, teamStats.blocks_tie, advPlayerStats.bpg_pct);
+					decimal wins = teamStats.Wins() + ((decimal)teamStats.Ties() / 2);
+					advPlayerStats.pct_contribution_of_wins = wins > 0 ? advPlayerStats.win_pct_contribution / wins : 0;
+				}
+			}
+		}
+
+		private decimal CalcWinPctContribution(bool? catWin, bool? catTie, decimal? perGamePct)
+		{
+			decimal retVal = 0;
+			if (catWin.HasValue && catWin.Value && perGamePct.HasValue)
+			{
+				retVal = perGamePct.Value;
+			}
+			else if (catTie.HasValue && catTie.Value && perGamePct.HasValue)
+			{
+				retVal = perGamePct.Value / 2;
+			}
 			return retVal;
 		}
 	}

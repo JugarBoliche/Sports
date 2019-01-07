@@ -206,5 +206,35 @@ namespace YahooFantasyAPI.Extensions
 			return pi;
 		}
 
+		public static int Wins(this NBAWeeklyTeamStat teamStats)
+		{
+			return teamStats.points_win.ToInt() + teamStats.rebounds_win.ToInt() + teamStats.assists_win.ToInt() + teamStats.steals_win.ToInt() + teamStats.blocks_win.ToInt();
+		}
+
+		public static int Losses(this NBAWeeklyTeamStat teamStats)
+		{
+			int losses = teamStats.points_win.Value || teamStats.points_tie.Value ? 0 : 1;
+			losses = losses + (teamStats.rebounds_win.Value || teamStats.rebounds_tie.Value ? 0 : 1);
+			losses = losses + (teamStats.assists_win.Value || teamStats.assists_tie.Value ? 0 : 1);
+			losses = losses + (teamStats.steals_win.Value || teamStats.steals_tie.Value ? 0 : 1);
+			losses = losses + (teamStats.blocks_win.Value || teamStats.blocks_tie.Value ? 0 : 1);
+			return losses;
+		}
+
+		public static int Ties(this NBAWeeklyTeamStat teamStats)
+		{
+			return teamStats.points_tie.ToInt() + teamStats.rebounds_tie.ToInt() + teamStats.assists_tie.ToInt() + teamStats.steals_tie.ToInt() + teamStats.blocks_tie.ToInt();
+		}
+
+		public static int ToInt(this bool? boolVal)
+		{
+			int retVal = 0;
+			if(boolVal.HasValue && boolVal.Value)
+			{
+				retVal = 1;
+			}
+			return retVal;
+		}
+
 	}
 }
