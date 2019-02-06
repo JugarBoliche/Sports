@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Sports" Class="SportsDataDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=CSG-028636\SQL2K14EXPRESS;Initial Catalog=Sports;Integrated Security=True" SettingsObjectName="SportsDataAccess.Properties.Settings" SettingsPropertyName="SportsConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=CSG-028636\SQL2K14EXPRESS;Initial Catalog=Sports;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True" SettingsObjectName="SportsDataAccess.Properties.Settings" SettingsPropertyName="SportsConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.GameInfo" Member="GameInfos">
     <Type Name="GameInfo">
       <Column Name="game_key" Type="System.String" DbType="NVarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -18,9 +18,9 @@
       <Column Name="game_key" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="name" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
       <Association Name="LeagueInfo_TeamInfo" Member="TeamInfos" ThisKey="league_key" OtherKey="league_key" Type="TeamInfo" />
-      <Association Name="LeagueInfo_NBAAdvTotalPlayerStat" Member="NBAAdvTotalPlayerStats" ThisKey="league_key" OtherKey="league_key" Type="NBAAdvTotalPlayerStat" />
       <Association Name="LeagueInfo_WeekInfo" Member="WeekInfos" ThisKey="league_key" OtherKey="league_key" Type="WeekInfo" />
       <Association Name="LeagueInfo_MatchupInfo" Member="MatchupInfos" ThisKey="league_key" OtherKey="league_key" Type="MatchupInfo" />
+      <Association Name="LeagueInfo_NBAAdvTotalPlayerStat" Member="NBAAdvTotalPlayerStats" ThisKey="league_key" OtherKey="league_key" Type="NBAAdvTotalPlayerStat" />
       <Association Name="GameInfo_LeagueInfo" Member="GameInfo" ThisKey="game_key" OtherKey="game_key" Type="GameInfo" IsForeignKey="true" />
     </Type>
   </Table>
@@ -33,9 +33,9 @@
       <Column Name="manager" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Association Name="TeamInfo_MatchupInfo" Member="MatchupInfos" ThisKey="team_key" OtherKey="team1_key" Type="MatchupInfo" />
       <Association Name="TeamInfo_MatchupInfo1" Member="MatchupInfos1" ThisKey="team_key" OtherKey="team2_key" Type="MatchupInfo" />
-      <Association Name="TeamInfo_NBAAdvWeeklyPlayerStat" Member="NBAAdvWeeklyPlayerStats" ThisKey="team_key" OtherKey="team_key" Type="NBAAdvWeeklyPlayerStat" />
       <Association Name="TeamInfo_NBAWeeklyPlayerStat" Member="NBAWeeklyPlayerStats" ThisKey="team_key" OtherKey="team_key" Type="NBAWeeklyPlayerStat" />
       <Association Name="TeamInfo_NBAWeeklyTeamStat" Member="NBAWeeklyTeamStats" ThisKey="team_key" OtherKey="team_key" Type="NBAWeeklyTeamStat" />
+      <Association Name="TeamInfo_NBAAdvWeeklyPlayerStat" Member="NBAAdvWeeklyPlayerStats" ThisKey="team_key" OtherKey="team_key" Type="NBAAdvWeeklyPlayerStat" />
       <Association Name="LeagueInfo_TeamInfo" Member="LeagueInfo" ThisKey="league_key" OtherKey="league_key" Type="LeagueInfo" IsForeignKey="true" />
     </Type>
   </Table>
@@ -46,41 +46,10 @@
       <Column Name="game_key" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="first_name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="last_name" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Association Name="PlayerInfo_NBAAdvTotalPlayerStat" Member="NBAAdvTotalPlayerStats" ThisKey="player_key" OtherKey="player_key" Type="NBAAdvTotalPlayerStat" />
-      <Association Name="PlayerInfo_NBAAdvWeeklyPlayerStat" Member="NBAAdvWeeklyPlayerStats" ThisKey="player_key" OtherKey="player_key" Type="NBAAdvWeeklyPlayerStat" />
       <Association Name="PlayerInfo_NBAWeeklyPlayerStat" Member="NBAWeeklyPlayerStats" ThisKey="player_key" OtherKey="player_key" Type="NBAWeeklyPlayerStat" />
+      <Association Name="PlayerInfo_NBAAdvWeeklyPlayerStat" Member="NBAAdvWeeklyPlayerStats" ThisKey="player_key" OtherKey="player_key" Type="NBAAdvWeeklyPlayerStat" />
+      <Association Name="PlayerInfo_NBAAdvTotalPlayerStat" Member="NBAAdvTotalPlayerStats" ThisKey="player_key" OtherKey="player_key" Type="NBAAdvTotalPlayerStat" />
       <Association Name="GameInfo_PlayerInfo" Member="GameInfo" ThisKey="game_key" OtherKey="game_key" Type="GameInfo" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.NBAAdvTotalPlayerStats" Member="NBAAdvTotalPlayerStats">
-    <Type Name="NBAAdvTotalPlayerStat">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="player_key" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="league_key" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="weeks_started" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="total_ppg_pct" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="total_rpg_pct" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="total_apg_pct" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="total_spg_pct" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="total_bpg_pct" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="total_pct_contribution" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="total_points_win" Type="System.Decimal" DbType="Decimal(2,0)" CanBeNull="true" />
-      <Column Name="total_rebounds_win" Type="System.Decimal" DbType="Decimal(2,0)" CanBeNull="true" />
-      <Column Name="total_assists_win" Type="System.Decimal" DbType="Decimal(2,0)" CanBeNull="true" />
-      <Column Name="total_steals_win" Type="System.Decimal" DbType="Decimal(2,0)" CanBeNull="true" />
-      <Column Name="total_blocks_win" Type="System.Decimal" DbType="Decimal(2,0)" CanBeNull="true" />
-      <Column Name="total_wins" Type="System.Decimal" DbType="Decimal(5,0)" CanBeNull="true" />
-      <Column Name="total_win_ppg_pct" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="total_win_rpg_pct" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="total_win_apg_pct" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="total_win_spg_pct" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="total_win_bpg_pct" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="total_win_pct_contribution" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="win_pct_contribution_per_week" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="pct_contribution_per_win" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="player_win_pct" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Association Name="LeagueInfo_NBAAdvTotalPlayerStat" Member="LeagueInfo" ThisKey="league_key" OtherKey="league_key" Type="LeagueInfo" IsForeignKey="true" />
-      <Association Name="PlayerInfo_NBAAdvTotalPlayerStat" Member="PlayerInfo" ThisKey="player_key" OtherKey="player_key" Type="PlayerInfo" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.WeekInfo" Member="WeekInfos">
@@ -96,9 +65,9 @@
       <Column Name="endDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
       <Column Name="lastLoadDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
       <Association Name="WeekInfo_MatchupInfo" Member="MatchupInfos" ThisKey="id" OtherKey="week_id" Type="MatchupInfo" />
-      <Association Name="WeekInfo_NBAAdvWeeklyPlayerStat" Member="NBAAdvWeeklyPlayerStats" ThisKey="id" OtherKey="week_id" Type="NBAAdvWeeklyPlayerStat" />
       <Association Name="WeekInfo_NBAWeeklyPlayerStat" Member="NBAWeeklyPlayerStats" ThisKey="id" OtherKey="week_id" Type="NBAWeeklyPlayerStat" />
       <Association Name="WeekInfo_NBAWeeklyTeamStat" Member="NBAWeeklyTeamStats" ThisKey="id" OtherKey="week_id" Type="NBAWeeklyTeamStat" />
+      <Association Name="WeekInfo_NBAAdvWeeklyPlayerStat" Member="NBAAdvWeeklyPlayerStats" ThisKey="id" OtherKey="week_id" Type="NBAAdvWeeklyPlayerStat" />
       <Association Name="LeagueInfo_WeekInfo" Member="LeagueInfo" ThisKey="league_key" OtherKey="league_key" Type="LeagueInfo" IsForeignKey="true" />
     </Type>
   </Table>
@@ -115,23 +84,50 @@
       <Association Name="WeekInfo_MatchupInfo" Member="WeekInfo" ThisKey="week_id" OtherKey="id" Type="WeekInfo" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.NBAAdvWeeklyPlayerStats" Member="NBAAdvWeeklyPlayerStats">
-    <Type Name="NBAAdvWeeklyPlayerStat">
+  <Table Name="dbo.StatAdvPlayerSeason" Member="StatAdvPlayerSeasons">
+    <Type Name="StatAdvPlayerSeason">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="player_key" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="team_key" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Column Name="week_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="ppg_pct" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="rpg_pct" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="apg_pct" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="spg_pct" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="bpg_pct" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="pct_contribution" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="win_pct_contribution" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Column Name="pct_contribution_of_wins" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
-      <Association Name="PlayerInfo_NBAAdvWeeklyPlayerStat" Member="PlayerInfo" ThisKey="player_key" OtherKey="player_key" Type="PlayerInfo" IsForeignKey="true" />
-      <Association Name="TeamInfo_NBAAdvWeeklyPlayerStat" Member="TeamInfo" ThisKey="team_key" OtherKey="team_key" Type="TeamInfo" IsForeignKey="true" />
-      <Association Name="WeekInfo_NBAAdvWeeklyPlayerStat" Member="WeekInfo" ThisKey="week_id" OtherKey="id" Type="WeekInfo" IsForeignKey="true" />
+      <Column Name="nba_adv_total_player_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="stat_type_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="percentage" Type="System.Decimal" DbType="Decimal(10,8)" CanBeNull="true" />
+      <Column Name="win" Type="System.Decimal" DbType="Decimal(3,1)" CanBeNull="true" />
+      <Column Name="win_shares" Type="System.Decimal" DbType="Decimal(10,8)" CanBeNull="true" />
+      <Association Name="NBAAdvTotalPlayerStat_StatAdvPlayerSeason" Member="NBAAdvTotalPlayerStat" ThisKey="nba_adv_total_player_id" OtherKey="id" Type="NBAAdvTotalPlayerStat" IsForeignKey="true" />
+      <Association Name="StatType_StatAdvPlayerSeason" Member="StatType" ThisKey="stat_type_id" OtherKey="stat_type_id" Type="StatType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.StatAdvPlayerWeek" Member="StatAdvPlayerWeeks">
+    <Type Name="StatAdvPlayerWeek">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nba_adv_weekly_player_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="stat_type_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="percentage" Type="System.Decimal" DbType="Decimal(10,8)" CanBeNull="true" />
+      <Column Name="win" Type="System.Decimal" DbType="Decimal(3,1)" CanBeNull="true" />
+      <Column Name="win_share" Type="System.Decimal" DbType="Decimal(10,8)" CanBeNull="true" />
+      <Association Name="NBAAdvWeeklyPlayerStat_StatAdvPlayerWeek" Member="NBAAdvWeeklyPlayerStat" ThisKey="nba_adv_weekly_player_id" OtherKey="id" Type="NBAAdvWeeklyPlayerStat" IsForeignKey="true" />
+      <Association Name="StatType_StatAdvPlayerWeek" Member="StatType" ThisKey="stat_type_id" OtherKey="stat_type_id" Type="StatType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.StatPlayerWeekTotal" Member="StatPlayerWeekTotals">
+    <Type Name="StatPlayerWeekTotal">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nba_weekly_player_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="stat_type_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="total" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="NBAWeeklyPlayerStat_StatPlayerWeekTotal" Member="NBAWeeklyPlayerStat" ThisKey="nba_weekly_player_id" OtherKey="id" Type="NBAWeeklyPlayerStat" IsForeignKey="true" />
+      <Association Name="StatType_StatPlayerWeekTotal" Member="StatType" ThisKey="stat_type_id" OtherKey="stat_type_id" Type="StatType" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.StatTeamWeekTotal" Member="StatTeamWeekTotals">
+    <Type Name="StatTeamWeekTotal">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nba_weekly_team_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="stat_type_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="total" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="win" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="tie" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="NBAWeeklyTeamStat_StatTeamWeekTotal" Member="NBAWeeklyTeamStat" ThisKey="nba_weekly_team_id" OtherKey="id" Type="NBAWeeklyTeamStat" IsForeignKey="true" />
+      <Association Name="StatType_StatTeamWeekTotal" Member="StatType" ThisKey="stat_type_id" OtherKey="stat_type_id" Type="StatType" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.NBAWeeklyPlayerStats" Member="NBAWeeklyPlayerStats">
@@ -142,12 +138,8 @@
       <Column Name="week_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="games_played" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="games_missed" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="points" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="rebounds" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="assists" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="steals" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="blocks" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="position" Type="System.String" DbType="NVarChar(10)" CanBeNull="true" />
+      <Association Name="NBAWeeklyPlayerStat_StatPlayerWeekTotal" Member="StatPlayerWeekTotals" ThisKey="id" OtherKey="nba_weekly_player_id" Type="StatPlayerWeekTotal" />
       <Association Name="PlayerInfo_NBAWeeklyPlayerStat" Member="PlayerInfo" ThisKey="player_key" OtherKey="player_key" Type="PlayerInfo" IsForeignKey="true" />
       <Association Name="TeamInfo_NBAWeeklyPlayerStat" Member="TeamInfo" ThisKey="team_key" OtherKey="team_key" Type="TeamInfo" IsForeignKey="true" />
       <Association Name="WeekInfo_NBAWeeklyPlayerStat" Member="WeekInfo" ThisKey="week_id" OtherKey="id" Type="WeekInfo" IsForeignKey="true" />
@@ -160,23 +152,54 @@
       <Column Name="week_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="games_played" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="games_missed" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="points" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="assists" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="rebounds" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="steals" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="blocks" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="points_win" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="rebounds_win" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="assists_win" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="steals_win" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="blocks_win" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="points_tie" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="rebounds_tie" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="assists_tie" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="steals_tie" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="blocks_tie" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="NBAWeeklyTeamStat_StatTeamWeekTotal" Member="StatTeamWeekTotals" ThisKey="id" OtherKey="nba_weekly_team_id" Type="StatTeamWeekTotal" />
       <Association Name="TeamInfo_NBAWeeklyTeamStat" Member="TeamInfo" ThisKey="team_key" OtherKey="team_key" Type="TeamInfo" IsForeignKey="true" />
       <Association Name="WeekInfo_NBAWeeklyTeamStat" Member="WeekInfo" ThisKey="week_id" OtherKey="id" Type="WeekInfo" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.NBAAdvWeeklyPlayerStats" Member="NBAAdvWeeklyPlayerStats">
+    <Type Name="NBAAdvWeeklyPlayerStat">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="player_key" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="team_key" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="week_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="pct_contribution" Type="System.Decimal" DbType="Decimal(10,8)" CanBeNull="true" />
+      <Column Name="wins" Type="System.Decimal" DbType="Decimal(3,1)" CanBeNull="true" />
+      <Column Name="win_share_contribution" Type="System.Decimal" DbType="Decimal(10,8)" CanBeNull="true" />
+      <Column Name="wins_responsibility" Type="System.Decimal" DbType="Decimal(10,8)" CanBeNull="true" />
+      <Association Name="NBAAdvWeeklyPlayerStat_StatAdvPlayerWeek" Member="StatAdvPlayerWeeks" ThisKey="id" OtherKey="nba_adv_weekly_player_id" Type="StatAdvPlayerWeek" />
+      <Association Name="PlayerInfo_NBAAdvWeeklyPlayerStat" Member="PlayerInfo" ThisKey="player_key" OtherKey="player_key" Type="PlayerInfo" IsForeignKey="true" />
+      <Association Name="TeamInfo_NBAAdvWeeklyPlayerStat" Member="TeamInfo" ThisKey="team_key" OtherKey="team_key" Type="TeamInfo" IsForeignKey="true" />
+      <Association Name="WeekInfo_NBAAdvWeeklyPlayerStat" Member="WeekInfo" ThisKey="week_id" OtherKey="id" Type="WeekInfo" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.NBAAdvTotalPlayerStats" Member="NBAAdvTotalPlayerStats">
+    <Type Name="NBAAdvTotalPlayerStat">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="player_key" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="league_key" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="weeks_started" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="percentage" Type="System.Decimal" DbType="Decimal(13,8)" CanBeNull="true" />
+      <Column Name="wins" Type="System.Decimal" DbType="Decimal(5,1)" CanBeNull="true" />
+      <Column Name="win_shares_contribution" Type="System.Decimal" DbType="Decimal(13,8)" CanBeNull="true" />
+      <Column Name="win_shares_contribution_per_start" Type="System.Decimal" DbType="Decimal(13,8)" CanBeNull="true" />
+      <Column Name="win_shares_contribution_per_win" Type="System.Decimal" DbType="Decimal(13,8)" CanBeNull="true" />
+      <Column Name="player_win_pct" Type="System.Decimal" DbType="Decimal(13,8)" CanBeNull="true" />
+      <Association Name="NBAAdvTotalPlayerStat_StatAdvPlayerSeason" Member="StatAdvPlayerSeasons" ThisKey="id" OtherKey="nba_adv_total_player_id" Type="StatAdvPlayerSeason" />
+      <Association Name="LeagueInfo_NBAAdvTotalPlayerStat" Member="LeagueInfo" ThisKey="league_key" OtherKey="league_key" Type="LeagueInfo" IsForeignKey="true" />
+      <Association Name="PlayerInfo_NBAAdvTotalPlayerStat" Member="PlayerInfo" ThisKey="player_key" OtherKey="player_key" Type="PlayerInfo" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.StatType" Member="StatTypes">
+    <Type Name="StatType">
+      <Column Name="stat_type_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="description" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="long_abbr" Type="System.String" DbType="NChar(5)" CanBeNull="true" />
+      <Column Name="short_abbr" Type="System.String" DbType="NChar(3)" CanBeNull="true" />
+      <Association Name="StatType_StatAdvPlayerSeason" Member="StatAdvPlayerSeasons" ThisKey="stat_type_id" OtherKey="stat_type_id" Type="StatAdvPlayerSeason" />
+      <Association Name="StatType_StatAdvPlayerWeek" Member="StatAdvPlayerWeeks" ThisKey="stat_type_id" OtherKey="stat_type_id" Type="StatAdvPlayerWeek" />
+      <Association Name="StatType_StatPlayerWeekTotal" Member="StatPlayerWeekTotals" ThisKey="stat_type_id" OtherKey="stat_type_id" Type="StatPlayerWeekTotal" />
+      <Association Name="StatType_StatTeamWeekTotal" Member="StatTeamWeekTotals" ThisKey="stat_type_id" OtherKey="stat_type_id" Type="StatTeamWeekTotal" />
     </Type>
   </Table>
 </Database>

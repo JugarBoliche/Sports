@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Builder.cs" />
+    <Compile Include="Calculator.cs" />
     <Compile Include="DatePlayerStats.cs" />
     <Compile Include="Extensions\SportsDataAccessExtension.cs" />
     <Compile Include="Game.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="PlayerStats.cs" />
     <Compile Include="WeeklyTeamStats.cs" />
     <Compile Include="WeekPlayerStats.cs" />
+    <Compile Include="WinTieInfo.cs" />
     <Compile Include="YahooAPI.cs" />
     <Compile Include="YahooObjectBase.cs" />
   </ItemGroup>

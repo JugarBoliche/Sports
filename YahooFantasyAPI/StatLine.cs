@@ -18,6 +18,8 @@ namespace YahooFantasyAPI
 		public const string Stls_Stat_ID = "17";
 		public const string Blks_Stat_ID = "18";
 
+		Dictionary<string, int?> _allStats = new Dictionary<string, int?>();
+
 		public StatLine(YahooAPI yahoo, XElement xml) : base(yahoo, xml)
 		{
 			foreach(XElement descendantXml in GetDescendants(xml, "stat"))
@@ -26,24 +28,16 @@ namespace YahooFantasyAPI
 				//string stat_string_value = GetElementAsString(descendantXml, "value");
 				int? stat_value = GetElementAsInt(descendantXml, "value");
 
-				if((!string.IsNullOrEmpty(stat_id)) && (stat_value.HasValue))
+				if(!string.IsNullOrEmpty(stat_id))
 				{
 					switch (stat_id)
 					{
 						case Pts_Stat_ID:
-							Points = stat_value.Value;
-							break;
 						case Rebs_Stat_ID:
-							Rebounds = stat_value.Value;
-							break;
 						case Asts_Stat_ID:
-							Assists = stat_value.Value;
-							break;
 						case Stls_Stat_ID:
-							Steals = stat_value.Value;
-							break;
 						case Blks_Stat_ID:
-							Blocks = stat_value.Value;
+							_allStats.Add(stat_id, stat_value);
 							break;
 					}
 				}
@@ -60,11 +54,84 @@ namespace YahooFantasyAPI
 			Blocks = blks;
 		}
 
-		public int? Points { get; set; }
-		public int? Rebounds { get; set; }
-		public int? Assists { get; set; }
-		public int? Steals { get; set; }
-		public int? Blocks { get; set; }
+		public int? GetStatValue(string yahooStatId)
+		{
+			switch(yahooStatId)
+			{
+				case Pts_Stat_ID:
+					return Points;
+				case Rebs_Stat_ID:
+					return Rebounds;
+				case Asts_Stat_ID:
+					return Assists;
+				case Stls_Stat_ID:
+					return Steals;
+				case Blks_Stat_ID:
+					return Blocks;
+				default:
+					return null;
+			}
+		}
+
+		public int? Points
+		{
+			get
+			{
+				return _allStats[Pts_Stat_ID];
+			}
+			set
+			{
+				_allStats[Pts_Stat_ID] = value;
+			}
+		}
+
+		public int? Rebounds
+		{
+			get
+			{
+				return _allStats[Rebs_Stat_ID];
+			}
+			set
+			{
+				_allStats[Rebs_Stat_ID] = value;
+			}
+		}
+
+		public int? Assists
+		{
+			get
+			{
+				return _allStats[Asts_Stat_ID];
+			}
+			set
+			{
+				_allStats[Asts_Stat_ID] = value;
+			}
+		}
+
+		public int? Steals
+		{
+			get
+			{
+				return _allStats[Stls_Stat_ID];
+			}
+			set
+			{
+				_allStats[Stls_Stat_ID] = value;
+			}
+		}
+
+		public int? Blocks
+		{
+			get
+			{
+				return _allStats[Blks_Stat_ID];
+			}
+			set
+			{
+				_allStats[Blks_Stat_ID] = value;
+			}
+		}
 
 		public bool StatsNotNull
 		{
@@ -73,6 +140,15 @@ namespace YahooFantasyAPI
 				return Points.HasValue && Rebounds.HasValue && Assists.HasValue && Steals.HasValue && Blocks.HasValue;
 			}
 		}
+
+		public Dictionary<string, int?> AllStats
+		{
+			get
+			{
+				return _allStats;
+			}
+		}
+
 		//public bool StatsNotZero
 		//{
 		//	get
