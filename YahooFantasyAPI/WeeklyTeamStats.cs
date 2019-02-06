@@ -12,16 +12,17 @@ namespace YahooFantasyAPI
 		private int _week;
 		private string _teamkey;
 		private StatLine _teamStats = null;
-		private bool? _ptsWin;
-		private bool? _rebsWin;
-		private bool? _asstsWin;
-		private bool? _stlsWin;
-		private bool? _blksWin;
-		private bool? _ptsTie;
-		private bool? _rebsTie;
-		private bool? _asstsTie;
-		private bool? _stlsTie;
-		private bool? _blksTie;
+		private Dictionary<string, WinTieInfo> _statsWinTieInfo = new Dictionary<string, WinTieInfo>();
+		//private bool? _ptsWin;
+		//private bool? _rebsWin;
+		//private bool? _asstsWin;
+		//private bool? _stlsWin;
+		//private bool? _blksWin;
+		//private bool? _ptsTie;
+		//private bool? _rebsTie;
+		//private bool? _asstsTie;
+		//private bool? _stlsTie;
+		//private bool? _blksTie;
 
 		public WeeklyTeamStats(YahooAPI yahoo, XElement xml, string teamKey) : base(yahoo, xml)
 		{
@@ -61,29 +62,9 @@ namespace YahooFantasyAPI
 				{
 					isWin = true;
 				}
-				switch (statID)
-				{
-					case StatLine.Pts_Stat_ID:
-						_ptsWin = isWin;
-						_ptsTie = isTie;
-						break;
-					case StatLine.Rebs_Stat_ID:
-						_rebsWin = isWin;
-						_rebsTie = isTie;
-						break;
-					case StatLine.Asts_Stat_ID:
-						_asstsWin = isWin;
-						_asstsTie = isTie;
-						break;
-					case StatLine.Stls_Stat_ID:
-						_stlsWin = isWin;
-						_stlsTie = isTie;
-						break;
-					case StatLine.Blks_Stat_ID:
-						_blksWin = isWin;
-						_blksTie = isTie;
-						break;
-				}
+
+				_statsWinTieInfo.Add(statID, new WinTieInfo(isWin, isTie));
+				
 			}
 		}
 
@@ -129,83 +110,11 @@ namespace YahooFantasyAPI
 			}
 		}
 
-		public bool? PtsWin
+		public Dictionary<string, WinTieInfo> StatsWinTieInfo
 		{
 			get
 			{
-				return _ptsWin;
-			}
-		}
-
-		public bool? RebsWin
-		{
-			get
-			{
-				return _rebsWin;
-			}
-		}
-
-		public bool? AsstsWin
-		{
-			get
-			{
-				return _asstsWin;
-			}
-		}
-
-		public bool? StlsWin
-		{
-			get
-			{
-				return _stlsWin;
-			}
-		}
-
-		public bool? BlksWin
-		{
-			get
-			{
-				return _blksWin;
-			}
-		}
-
-		public bool? PtsTie
-		{
-			get
-			{
-				return _ptsTie;
-			}
-		}
-
-		public bool? RebsTie
-		{
-			get
-			{
-				return _rebsTie;
-			}
-		}
-
-		public bool? AsstsTie
-		{
-			get
-			{
-				return _asstsTie;
-			}
-		}
-
-		public bool? StlsTie
-		{
-			get
-			{
-				return _stlsTie;
-			}
-		}
-
-		public bool? BlksTie
-		{
-			get
-			{
-				return _blksTie;
+				return _statsWinTieInfo;
 			}
 		}
 	}

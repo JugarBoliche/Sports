@@ -29,18 +29,23 @@ namespace YahooFantasyAPI
 			List<LeagueInfo> leagues = AddLeagueData(game);
 			foreach(LeagueInfo league in leagues)
 			{
-				AddAdvancedWeeklyStats(league, league.WeekInfos.First());
+				//AddAdvancedWeeklyStats(league, league.WeekInfos.First());
 
 				IEnumerable<WeekInfo> weeks = league.WeekInfos.Where(wi => (wi.startDate < DateTime.Now.Date && !wi.lastLoadDate.HasValue) || (wi.lastLoadDate.HasValue && wi.lastLoadDate.Value < wi.endDate.AddDays(2)));
 				foreach (WeekInfo week in weeks)
 				{
 					//AddWeeklyTeamData(li.league_key, week);
 					AddWeeklyData(league, week);
+					if (week.endDate < DateTime.Now)
+					{
+						AddAdvancedWeeklyStats(league, week);
+					}
 					week.lastLoadDate = DateTime.Now;
 					_sportsData.SubmitChanges();
 
 					//AddWeeklyIndividualData(li, week);
 				}
+				UpdatePlayerSeasonStats(league);
 			}			
 		}
 
@@ -151,47 +156,60 @@ namespace YahooFantasyAPI
 				NBAWeeklyTeamStat existingWts = _sportsData.NBAWeeklyTeamStats.SingleOrDefault(s => ((s.week_id == wts.week_id) && (s.team_key == wts.team_key)));
 				if (existingWts != null)
 				{
-					existingWts.UpdateWeeklyTeamStats(wts);
+					existingWts.games_played = wts.games_played;
+					existingWts.games_missed = wts.games_missed;
+					List<StatTeamWeekTotal> stats = teamstats.CreateAllTeamWeekTotals(existingWts);
+					AddOrUpdateStatTeamWeekTotal(stats);
 				}
 				else
 				{
 					_sportsData.NBAWeeklyTeamStats.InsertOnSubmit(wts);
+					_sportsData.SubmitChanges();
+					List<StatTeamWeekTotal> stats = teamstats.CreateAllTeamWeekTotals(wts);
+					AddOrUpdateStatTeamWeekTotal(stats);
 				}
 				_sportsData.SubmitChanges();
 			}
 		}
 
-		//public void AddWeeklyTeamData(string leagueKey, WeekInfo week)
-		//{
-		//	foreach(WeeklyTeamStats teamstats in WeeklyTeamStats.GetWeeklyTeamStats(_yahoo, leagueKey, week.week))
-		//	{
-		//		NBAWeeklyTeamStat wts = teamstats.CreateWeeklyTeamStats(week);
-		//		NBAWeeklyTeamStat existingWts = _sportsData.NBAWeeklyTeamStats.SingleOrDefault(s => ((s.week_id == wts.week_id) && (s.team_key == wts.team_key)));
-		//		if (existingWts != null)
-		//		{
-		//			existingWts.UpdateWeeklyTeamStats(wts);
-		//		}
-		//		else
-		//		{
-		//			_sportsData.NBAWeeklyTeamStats.InsertOnSubmit(wts);
-		//		}
-		//		_sportsData.SubmitChanges();
-		//	}
-		//}
-
-		public List<NBAWeeklyPlayerStat> AddWeeklyIndividualData(LeagueInfo league, TeamInfo team, WeekInfo week)
+		private void AddOrUpdateStatTeamWeekTotal(IEnumerable<StatTeamWeekTotal> stats)
 		{
-			List<WeekPlayerStats> weekStats = WeekPlayerStats.GetWeeklyPlayerStats(_yahoo, team.team_key, week.week);
-			foreach (Player player in weekStats.Select(s => s.Player).Where(p => p.IsStarting.HasValue && p.IsStarting.Value))
+			foreach (StatTeamWeekTotal stat in stats)
+			{
+				StatTeamWeekTotal existingStat = _sportsData.StatTeamWeekTotals.SingleOrDefault(s => s.nba_weekly_team_id == stat.nba_weekly_team_id && s.stat_type_id == stat.stat_type_id);
+				if (existingStat != null)
+				{
+					existingStat.win = stat.win;
+					existingStat.tie = stat.tie;
+					existingStat.total = stat.total;
+				}
+				else
+				{
+					_sportsData.StatTeamWeekTotals.InsertOnSubmit(stat);
+				}
+			}
+			_sportsData.SubmitChanges();
+		}
+
+		public void AddPlayerIfNeeded(IEnumerable<Player> players, GameInfo game)
+		{
+			foreach (Player player in players)
 			{
 				//if (!league.GameInfo.PlayerInfos.Any(p => p.player_key == player.PlayerKey))
-				if (!_sportsData.PlayerInfos.Any(p => p.game_key == league.game_key && p.player_key == player.PlayerKey))
+				if (!_sportsData.PlayerInfos.Any(p => p.game_key == game.game_key && p.player_key == player.PlayerKey))
 				{
 					PlayerInfo playerInfo = player.CreatePlayerInfo();
 					_sportsData.PlayerInfos.InsertOnSubmit(playerInfo);
 				}
 			}
 			_sportsData.SubmitChanges();
+		}
+
+		public List<NBAWeeklyPlayerStat> AddWeeklyIndividualData(LeagueInfo league, TeamInfo team, WeekInfo week)
+		{
+			List<WeekPlayerStats> weekStats = WeekPlayerStats.GetWeeklyPlayerStats(_yahoo, team.team_key, week.week);
+
+			AddPlayerIfNeeded(weekStats.Select(s => s.Player).Where(p => p.IsStarting.HasValue && p.IsStarting.Value), league.GameInfo);
 
 			List<DatePlayerStats> dateStats = new List<DatePlayerStats>();
 			DateTime startDate = week.startDate.Date;
@@ -209,54 +227,144 @@ namespace YahooFantasyAPI
 				NBAWeeklyPlayerStat existingStats = _sportsData.NBAWeeklyPlayerStats.SingleOrDefault(s => s.week_id == weeklyPlayerStat.week_id && s.player_key == weeklyPlayerStat.player_key);
 				if(existingStats != null)
 				{
-					existingStats.UpdateWeeklyPlayerStat(weeklyPlayerStat);
+					existingStats.games_played = weeklyPlayerStat.games_played;
+					existingStats.games_missed = weeklyPlayerStat.games_missed;
+					List<StatPlayerWeekTotal> playerStats = weekStats.Single(s => s.PlayerKey == existingStats.player_key).CreateStatPlayerWeekTotal(existingStats);
+					AddOrUpdateStatPlayerWeekTotal(playerStats);
 					retVal.Add(existingStats);
 				}
 				else
 				{
 					_sportsData.NBAWeeklyPlayerStats.InsertOnSubmit(weeklyPlayerStat);
+					_sportsData.SubmitChanges();
+					List<StatPlayerWeekTotal> playerStats = weekStats.Single(s => s.PlayerKey == weeklyPlayerStat.player_key).CreateStatPlayerWeekTotal(weeklyPlayerStat);
+					AddOrUpdateStatPlayerWeekTotal(playerStats);
 					retVal.Add(weeklyPlayerStat);
 				}
 			}				
 			_sportsData.SubmitChanges();
 			return retVal;
 		}
+		private void AddOrUpdateStatPlayerWeekTotal(IEnumerable<StatPlayerWeekTotal> stats)
+		{
+			foreach (StatPlayerWeekTotal stat in stats)
+			{
+				StatPlayerWeekTotal existingStat = _sportsData.StatPlayerWeekTotals.SingleOrDefault(s => s.nba_weekly_player_id == stat.nba_weekly_player_id && s.stat_type_id == stat.stat_type_id);
+				if (existingStat != null)
+				{
+					existingStat.total = stat.total;
+				}
+				else
+				{
+					_sportsData.StatPlayerWeekTotals.InsertOnSubmit(stat);
+				}
+			}
+			_sportsData.SubmitChanges();
+		}
 
 		public void AddAdvancedWeeklyStats(LeagueInfo league, WeekInfo week)
 		{
 			foreach(TeamInfo team in league.TeamInfos)
 			{
-				foreach(NBAWeeklyPlayerStat playerStats in team.NBAWeeklyPlayerStats)
+				//NBAWeeklyTeamStat teamWeek = team.NBAWeeklyTeamStats.Single(s => s.week_id == week.id);
+				NBAWeeklyTeamStat teamWeek = _sportsData.NBAWeeklyTeamStats.Single(s => s.team_key == team.team_key && s.week_id == week.id);
+
+				foreach (NBAWeeklyPlayerStat playerWeek in team.NBAWeeklyPlayerStats.Where(s => s.week_id == week.id))
 				{
-					NBAWeeklyTeamStat teamStats = team.NBAWeeklyTeamStats.Single(s => s.week_id == week.id);
-					NBAAdvWeeklyPlayerStat advPlayerStats = new NBAAdvWeeklyPlayerStat();
-					advPlayerStats.player_key = playerStats.player_key;
-					advPlayerStats.team_key = team.team_key;
-					advPlayerStats.week_id = week.id;
-					advPlayerStats.ppg_pct = (decimal)playerStats.points.Value / teamStats.points.Value;
-					advPlayerStats.rpg_pct = (decimal)playerStats.rebounds.Value / teamStats.rebounds.Value;
-					advPlayerStats.apg_pct = (decimal)playerStats.assists.Value / teamStats.assists.Value;
-					advPlayerStats.spg_pct = (decimal)playerStats.steals.Value / teamStats.steals.Value;
-					advPlayerStats.bpg_pct = (decimal)playerStats.blocks.Value / teamStats.blocks.Value;
-					advPlayerStats.points_win = (decimal)teamStats.points_win.ToInt() + ((decimal)teamStats.points_tie.ToInt() / 2);
-					advPlayerStats.rebounds_win = (decimal)teamStats.rebounds_win.ToInt() + ((decimal)teamStats.rebounds_tie.ToInt() / 2);
-					advPlayerStats.assists_win = (decimal)teamStats.assists_win.ToInt() + ((decimal)teamStats.assists_tie.ToInt() / 2);
-					advPlayerStats.steals_win = (decimal)teamStats.steals_win.ToInt() + ((decimal)teamStats.steals_tie.ToInt() / 2);
-					advPlayerStats.blocks_win = (decimal)teamStats.blocks_win.ToInt() + ((decimal)teamStats.blocks_tie.ToInt() / 2);
-					advPlayerStats.pct_contribution = advPlayerStats.ppg_pct + advPlayerStats.rpg_pct + advPlayerStats.apg_pct + advPlayerStats.spg_pct + advPlayerStats.bpg_pct;
-					advPlayerStats.win_pct_contribution = 0;
-					advPlayerStats.win_pct_contribution = advPlayerStats.points_win * advPlayerStats.ppg_pct;
-					advPlayerStats.win_pct_contribution += CalcWinPctContribution(teamStats.points_win, teamStats.points_tie, advPlayerStats.ppg_pct);
-					advPlayerStats.win_pct_contribution += CalcWinPctContribution(teamStats.rebounds_win, teamStats.rebounds_tie, advPlayerStats.rpg_pct);
-					advPlayerStats.win_pct_contribution += CalcWinPctContribution(teamStats.assists_win, teamStats.assists_tie, advPlayerStats.apg_pct);
-					advPlayerStats.win_pct_contribution += CalcWinPctContribution(teamStats.steals_win, teamStats.steals_tie, advPlayerStats.spg_pct);
-					advPlayerStats.win_pct_contribution += CalcWinPctContribution(teamStats.blocks_win, teamStats.blocks_tie, advPlayerStats.bpg_pct);
-					decimal wins = teamStats.Wins() + ((decimal)teamStats.Ties() / 2);
-					advPlayerStats.pct_contribution_of_wins = wins > 0 ? advPlayerStats.win_pct_contribution / wins : 0;
+					NBAAdvWeeklyPlayerStat advPlayerWeek = _sportsData.NBAAdvWeeklyPlayerStats.SingleOrDefault(s => s.player_key == playerWeek.player_key && s.week_id == playerWeek.week_id && s.team_key == playerWeek.team_key);
+					if (advPlayerWeek == null)
+					{
+						advPlayerWeek = new NBAAdvWeeklyPlayerStat();
+						advPlayerWeek.player_key = playerWeek.player_key;
+						advPlayerWeek.team_key = team.team_key;
+						advPlayerWeek.week_id = week.id;
+						_sportsData.NBAAdvWeeklyPlayerStats.InsertOnSubmit(advPlayerWeek);
+						_sportsData.SubmitChanges();
+					}
+
+					IEnumerable<StatPlayerWeekTotal> playerStats = playerWeek.StatPlayerWeekTotals;
+
+					List<StatAdvPlayerWeek> advPlayerStats = new List<StatAdvPlayerWeek>();
+					foreach (StatPlayerWeekTotal playerStat in playerStats)
+					{
+						StatTeamWeekTotal teamStat = teamWeek.StatTeamWeekTotals.Single(s => s.stat_type_id == playerStat.stat_type_id);
+						StatAdvPlayerWeek advPlayerStat = _sportsData.StatAdvPlayerWeeks.SingleOrDefault(s => s.nba_adv_weekly_player_id == advPlayerWeek.id && s.stat_type_id == playerStat.stat_type_id);
+						if (advPlayerStat == null)
+						{
+							advPlayerStat = new StatAdvPlayerWeek();
+							advPlayerStat.nba_adv_weekly_player_id = advPlayerWeek.id;
+							advPlayerStat.stat_type_id = playerStat.stat_type_id;
+							_sportsData.StatAdvPlayerWeeks.InsertOnSubmit(advPlayerStat);
+						}
+						advPlayerStat.percentage = teamStat.total == 0 ? 0 : (decimal)playerStat.total / teamStat.total;
+						advPlayerStat.win = teamStat.win.ToInt() + ((decimal)teamStat.tie.ToInt() / 2);
+						advPlayerStat.win_share = advPlayerStat.percentage * advPlayerStat.win;
+						_sportsData.SubmitChanges();
+						advPlayerStats.Add(advPlayerStat);
+					}
+
+					advPlayerWeek.pct_contribution = advPlayerStats.Sum(s => s.percentage);
+					advPlayerWeek.wins = advPlayerStats.Sum(s => s.win);
+					advPlayerWeek.win_share_contribution = advPlayerStats.Sum(s => s.win_share);
+					advPlayerWeek.wins_responsibility = advPlayerWeek.wins > 0 ? advPlayerWeek.win_share_contribution / advPlayerWeek.wins : 0;
+					_sportsData.SubmitChanges();
 				}
 			}
 		}
 
+		public void UpdatePlayerSeasonStats(LeagueInfo league)
+		{
+			foreach(PlayerInfo player in league.GameInfo.PlayerInfos)
+			{
+				IEnumerable<NBAAdvWeeklyPlayerStat> advPlayerWeeks = _sportsData.NBAAdvWeeklyPlayerStats.Where(s => s.player_key == player.player_key);
+				IEnumerable<StatAdvPlayerWeek> advPlayerStats = advPlayerWeeks.SelectMany(s => s.StatAdvPlayerWeeks);
+
+				// Get NBAAdvTotalPlayerStat if it exists
+				NBAAdvTotalPlayerStat playerSeason = _sportsData.NBAAdvTotalPlayerStats.SingleOrDefault(s => s.player_key == player.player_key && s.league_key == league.league_key);
+
+				// If it doesn't exist create it and persist to the DB
+				if(playerSeason == null)
+				{
+					playerSeason = new NBAAdvTotalPlayerStat();
+					playerSeason.league_key = league.league_key;
+					playerSeason.player_key = player.player_key;
+					_sportsData.NBAAdvTotalPlayerStats.InsertOnSubmit(playerSeason);
+					_sportsData.SubmitChanges();
+				}
+				
+				// Create the individual advanced stat entries for each type of statistic. Determine types of statistic by group on the stat_type_id.
+				foreach(var statsByType in advPlayerStats.GroupBy(s => s.stat_type_id))
+				{
+					// Get the StatAdvPlayerSeason for this player and stat if it exists
+					StatAdvPlayerSeason seasonStat = _sportsData.StatAdvPlayerSeasons.SingleOrDefault(s => s.nba_adv_total_player_id == playerSeason.id && s.stat_type_id == statsByType.Key);
+
+					// If it doesn't exist, create it and persist it to the DB
+					if(seasonStat == null)
+					{
+						seasonStat = new StatAdvPlayerSeason();
+						seasonStat.nba_adv_total_player_id = playerSeason.id;
+						seasonStat.stat_type_id = statsByType.Key;
+						_sportsData.StatAdvPlayerSeasons.InsertOnSubmit(seasonStat);
+					}
+
+					// Set the additional values that need to be set (new or updating existing)
+					seasonStat.percentage = statsByType.Sum(s => s.percentage);
+					seasonStat.win = statsByType.Sum(s => s.win);
+					seasonStat.win_shares= statsByType.Sum(s => s.win_share);
+				}
+				_sportsData.SubmitChanges();
+
+				// Calculate the advanced stats
+				playerSeason.weeks_started = advPlayerWeeks.Count();
+				playerSeason.percentage = advPlayerWeeks.Sum(s => s.pct_contribution);
+				playerSeason.wins = advPlayerWeeks.Sum(s => s.wins);
+				playerSeason.win_shares_contribution = advPlayerWeeks.Sum(s => s.win_share_contribution);
+				playerSeason.win_shares_contribution_per_start = playerSeason.win_shares_contribution / playerSeason.weeks_started;
+				playerSeason.win_shares_contribution_per_win = playerSeason.wins == 0 ? 0 : playerSeason.win_shares_contribution / playerSeason.wins;
+				playerSeason.player_win_pct = advPlayerStats.Count() == 0 ? 0 : playerSeason.wins / advPlayerStats.Count();
+				_sportsData.SubmitChanges();
+			}
+		}
 		private decimal CalcWinPctContribution(bool? catWin, bool? catTie, decimal? perGamePct)
 		{
 			decimal retVal = 0;

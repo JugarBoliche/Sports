@@ -367,5 +367,12 @@ namespace YahooDesktop
 			Builder builder = new Builder(_yahoo);
 			builder.PopulateEverything("nba");
 		}
+
+		private void btnCalc_Click(object sender, EventArgs e)
+		{
+			Calculator calc = new Calculator();
+			Dictionary<TeamInfo, StatLine> totalStats = calc.GetTotalYearStats(calc.GetCurrentNBA());
+			calc.GetAvgYearStats(calc.GetCurrentNBA());
+		}
 	}
 }

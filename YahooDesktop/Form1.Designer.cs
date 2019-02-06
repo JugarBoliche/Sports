@@ -35,6 +35,7 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.btnExecute = new System.Windows.Forms.Button();
 			this.btnRunBuilder = new System.Windows.Forms.Button();
+			this.btnCalc = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// btnLoginYahoo
@@ -114,11 +115,23 @@
 			this.btnRunBuilder.UseVisualStyleBackColor = true;
 			this.btnRunBuilder.Click += new System.EventHandler(this.btnRunBuilder_Click);
 			// 
+			// btnCalc
+			// 
+			this.btnCalc.Location = new System.Drawing.Point(229, 13);
+			this.btnCalc.Margin = new System.Windows.Forms.Padding(4);
+			this.btnCalc.Name = "btnCalc";
+			this.btnCalc.Size = new System.Drawing.Size(164, 28);
+			this.btnCalc.TabIndex = 7;
+			this.btnCalc.Text = "Calculate Some Stats";
+			this.btnCalc.UseVisualStyleBackColor = true;
+			this.btnCalc.Click += new System.EventHandler(this.btnCalc_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(764, 498);
+			this.Controls.Add(this.btnCalc);
 			this.Controls.Add(this.btnRunBuilder);
 			this.Controls.Add(this.btnExecute);
 			this.Controls.Add(this.label1);
@@ -144,6 +157,7 @@
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Button btnExecute;
 		private System.Windows.Forms.Button btnRunBuilder;
+		private System.Windows.Forms.Button btnCalc;
 	}
 }
 
