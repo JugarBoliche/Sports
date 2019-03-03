@@ -11,7 +11,7 @@ namespace YahooFantasyAPI
 		public WinTieInfo(bool isWin, bool isTie)
 		{
 			IsWin = isWin;
-			IsTie = IsTie;
+			IsTie = isTie;
 		}
 		public bool IsWin { get; private set; }
 		public bool IsTie { get; private set; }

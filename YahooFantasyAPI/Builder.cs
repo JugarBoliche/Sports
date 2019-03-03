@@ -359,7 +359,7 @@ namespace YahooFantasyAPI
 				playerSeason.percentage = advPlayerWeeks.Sum(s => s.pct_contribution);
 				playerSeason.wins = advPlayerWeeks.Sum(s => s.wins);
 				playerSeason.win_shares_contribution = advPlayerWeeks.Sum(s => s.win_share_contribution);
-				playerSeason.win_shares_contribution_per_start = playerSeason.win_shares_contribution / playerSeason.weeks_started;
+				playerSeason.win_shares_contribution_per_start = playerSeason.weeks_started == 0 ? 0 : playerSeason.win_shares_contribution / playerSeason.weeks_started;
 				playerSeason.win_shares_contribution_per_win = playerSeason.wins == 0 ? 0 : playerSeason.win_shares_contribution / playerSeason.wins;
 				playerSeason.player_win_pct = advPlayerStats.Count() == 0 ? 0 : playerSeason.wins / advPlayerStats.Count();
 				_sportsData.SubmitChanges();
